@@ -3,6 +3,10 @@
 version = 4
 
 [[package]]
+name = "borrowing"
+version = "0.1.0"
+
+[[package]]
 name = "control-flow"
 version = "0.1.0"
 
@@ -16,6 +20,10 @@ version = "0.1.0"
 
 [[package]]
 name = "ownership"
+version = "0.1.0"
+
+[[package]]
+name = "references_and_borrowing"
 version = "0.1.0"
 
 [[package]]
