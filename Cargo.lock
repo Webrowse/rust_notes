@@ -23,7 +23,7 @@ name = "ownership"
 version = "0.1.0"
 
 [[package]]
-name = "references_and_borrowing"
+name = "references_and_slicing"
 version = "0.1.0"
 
 [[package]]
