@@ -64,3 +64,17 @@ impl User {
         println!("Hi, I'm {}", self.username);
     }
 }
+
+
+//Solve these again to recall these concept
+
+// 1. Define a `User` struct instance manually and print each field.
+// 2. Use struct update syntax to create a second user from the first with one changed field.
+// 3. Implement a tuple struct `Point(i32, i32)` and print its coordinates.
+// 4. Create and use a unit-like struct `Logger` that does nothing.
+// 5. Implement an associated function `User::default()` that returns a default user.
+// 6. Implement a method `change_email(&mut self, new_email: &str)` and test it.
+// 7. Call the `is_active` method and print the returned value.
+// 8. Call the `greet` method and verify the output.
+// 9. Refactor `User::new` to take ownership of the strings and call it with `String::from()`.
+// 10. Create a function that takes a `User` as parameter and prints all fields using a method inside `impl`.
