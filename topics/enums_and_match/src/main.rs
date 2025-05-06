@@ -94,3 +94,48 @@ fn plus_one(x: Option<i32>) -> Option<i32> {
         None => None,
     }
 }
+
+//Exercises for better understanding:
+
+// 1. enum TrafficLight {
+//     Red,
+//     Yellow,
+//     Green,
+// }
+
+// fn time_on(light: TrafficLight) -> u32 {
+//     match light {
+//         TrafficLight::Red => 60,
+//         TrafficLight::Yellow => 5,
+//         TrafficLight::Green => 30,
+//     }
+// }
+
+// fn main() {
+//     let red = TrafficLight::Red;
+//     let yellow = TrafficLight::Yellow;
+//     let green = TrafficLight::Green;
+
+//     println!("Red stays on for {} seconds", time_on(red));
+//     println!("Yellow stays on for {} seconds", time_on(yellow));
+//     println!("Green stays on for {} seconds", time_on(green));
+// }
+
+// 2. Create an enum `Shape` with variants `Circle(f64)`, `Rectangle(f64, f64)`, and `Square(f64)`. Write a function that uses `match` to compute the area of each shape.
+
+// 3. Implement a method `describe()` for the `IpAddr` enum that returns a string describing the IP address type and value.
+
+// 4. Create a function `handle_message(msg: Message)` that takes a `Message` enum and uses a match expression to return a different string based on the variant.
+
+// 5. Write a match block to convert `Option<String>` into a `String`, using "default" if the `Option` is `None`.
+
+// 6. Extend `UsState` with at least three more states. Modify `value_in_cents` to print a different message depending on which state the quarter is from.
+
+// 7. Define a new enum `Result<T, E>` with variants `Ok(T)` and `Err(E)`. Write a function that matches on this enum and handles success and error cases differently.
+
+// 8. Create a function `increment_if_some(opt: Option<i32>) -> Option<i32>` that mimics `plus_one`, but also prints whether a number was incremented or skipped.
+
+// 9. Replace all `match` expressions in the original code with `if let` or `while let` where possible. Explain each transformation in a comment.
+
+// 10. Write a test function that constructs one of each enum variant in the file, calls their associated functions or match expressions, and verifies expected behavior using `assert_eq!`.
+
