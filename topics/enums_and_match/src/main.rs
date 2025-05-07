@@ -122,7 +122,31 @@ fn plus_one(x: Option<i32>) -> Option<i32> {
 // }
 
 // 2. Create an enum `Shape` with variants `Circle(f64)`, `Rectangle(f64, f64)`, and `Square(f64)`. Write a function that uses `match` to compute the area of each shape.
+// enum Shape{
+//     Circle(f64),
+//     Rectangle(f64, f64),
+//     Square(f64),
+// }
 
+// impl Shape {
+//     fn area(&self) -> f64{
+//         match self {
+//             Shape::Circle(r) => 3.14*r*r,
+//             Shape::Rectangle(l,b) => l*b,
+//             Shape::Square(s) => s*s,
+//         }
+//     }
+// }
+// fn main(){
+//     let c = Shape::Circle(2.0);
+//     println!("Area of Circle: {}",c.area());
+    
+//     let r = Shape::Rectangle(2.0, 3.0);
+//     println!("Area of Rectangle: {}",r.area());
+    
+//     let s = Shape::Square(2.0);
+//     println!("Area of Square: {}",s.area());
+// }
 // 3. Implement a method `describe()` for the `IpAddr` enum that returns a string describing the IP address type and value.
 
 // 4. Create a function `handle_message(msg: Message)` that takes a `Message` enum and uses a match expression to return a different string based on the variant.
