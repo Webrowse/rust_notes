@@ -148,7 +148,25 @@ fn plus_one(x: Option<i32>) -> Option<i32> {
 //     println!("Area of Square: {}",s.area());
 // }
 // 3. Implement a method `describe()` for the `IpAddr` enum that returns a string describing the IP address type and value.
-
+// #[derive(Debug)]
+// enum IpAddr {
+//     V4(u8, u8, u8, u8),
+//     V6(String),
+// }
+// impl IpAddr {
+//     fn describe(&self) ->String {
+//         match self{
+//             IpAddr::V4(a,b,c,d) => format!("IP is V4, Value is {}.{}.{}.{}",a,b,c,d),
+//             IpAddr::V6(addr) => format!("IP is v6, Value is {}",addr)
+//         }
+//     }
+// }
+// fn main(){
+//     let test = IpAddr::V4(1,0,0,0);
+//     println!("{}",test.describe());
+//     let test2 = IpAddr::V6("::1".to_string());
+//     println!("{}",test2.describe());
+// }
 // 4. Create a function `handle_message(msg: Message)` that takes a `Message` enum and uses a match expression to return a different string based on the variant.
 
 // 5. Write a match block to convert `Option<String>` into a `String`, using "default" if the `Option` is `None`.
