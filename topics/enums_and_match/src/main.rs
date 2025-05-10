@@ -167,10 +167,39 @@ fn plus_one(x: Option<i32>) -> Option<i32> {
 //     let test2 = IpAddr::V6("::1".to_string());
 //     println!("{}",test2.describe());
 // }
-// 4. Create a function `handle_message(msg: Message)` that takes a `Message` enum and uses a match expression to return a different string based on the variant.
+// // 4. Create a function `handle_message(msg: Message)` that takes a `Message` enum and uses a match expression to return a different string based on the variant.
+// enum Message {
+//     Hello,
+//     Hi,
+// }
 
-// 5. Write a match block to convert `Option<String>` into a `String`, using "default" if the `Option` is `None`.
+// fn handle_message(msg: Message) -> String {
+//     match msg {
+//         Message::Hello => format!("hello sir"),
+//         Message::Hi => format!("hi ma'am"),
+//     }
+// }
 
+// fn main() {
+//     let a = Message::Hello;
+//     let b = handle_message(a);
+//     println!("{}", b);
+//     println!("{}", handle_message(Message::Hi));
+// }
+
+// // 5. Write a match block to convert `Option<String>` into a `String`, using "default" if the `Option` is `None`.
+// fn convert(op:Option<String>) -> String{
+//     match op{
+//         Some(s) => s,
+//         None => format!("{}",String::from("default"))
+//     }
+// }
+// fn main (){
+// let a = Some(String::from("hellleee"));
+// println!("{}",convert(a));
+//     let b  = None;
+//     println!("{}",convert(b));
+// }
 // 6. Extend `UsState` with at least three more states. Modify `value_in_cents` to print a different message depending on which state the quarter is from.
 
 // 7. Define a new enum `Result<T, E>` with variants `Ok(T)` and `Err(E)`. Write a function that matches on this enum and handles success and error cases differently.
