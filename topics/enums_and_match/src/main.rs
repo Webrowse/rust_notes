@@ -202,25 +202,44 @@
 // }
 // 6. Extend `UsState` with at least three more states. 
 // Modify `value_in_cents` to print a different message depending on which state the quarter is from.
-enum UsState{
-    Delhi,
-    California,
-    Texas
-}
-fn value_in_cents(state: UsState, curr: i32) -> i32{
-    match state{
-        UsState::Delhi => curr * 2,
-        UsState::California => curr * 3,
-        UsState::Texas => curr * 1,
+// enum UsState{
+//     Delhi,
+//     California,
+//     Texas
+// }
+// fn value_in_cents(state: UsState, curr: i32) -> i32{
+//     match state{
+//         UsState::Delhi => curr * 2,
+//         UsState::California => curr * 3,
+//         UsState::Texas => curr * 1,
+//     }
+// }
+// fn main(){
+//     let a = UsState::Delhi;
+//     let value = value_in_cents(a, 4);
+//     println!("{}",value);
+// }
+
+// 7. Define a new enum `Result<T, E>` with variants `Ok(T)` and `Err(E)`. 
+// Write a function that matches on this enum and handles success and error cases differently.
+
+// use std::fmt::format;
+
+
+fn result_check<T,E>(res: Result<T,E>) -> String{
+    match res{
+        Ok(_)=> String::from("test is ok: {}"),
+        Err(_)=> String::from("Error is here: {}"),
     }
 }
-fn main(){
-    let a = UsState::Delhi;
-    let value = value_in_cents(a, 4);
-    println!("{}",value);
-}
-// 7. Define a new enum `Result<T, E>` with variants `Ok(T)` and `Err(E)`. Write a function that matches on this enum and handles success and error cases differently.
 
+fn main(){
+    let a: Result<i32, &str> = Ok(10);
+    let b: Result<i32, &str> = Err("hehe");
+
+    println!("{}", result_check(a));
+    println!("{}", result_check(b));
+}
 // 8. Create a function `increment_if_some(opt: Option<i32>) -> Option<i32>` that mimics `plus_one`, but also prints whether a number was incremented or skipped.
 
 // 9. Replace all `match` expressions in the original code with `if let` or `while let` where possible. Explain each transformation in a comment.
