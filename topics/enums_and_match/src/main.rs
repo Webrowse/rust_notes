@@ -241,26 +241,52 @@
 //     println!("{}", result_check(b));
 // }
 
-enum CustomResult<T, E>{
-    Ok(T),
-    Err(E),
-}
-impl<T, E> CustomResult<T, E>{
-    fn check_result(&self) -> String{
-        match self{
-            CustomResult::Ok(_) => String::from("Ok tested"),
-            CustomResult::Err(_) => String::from("Nope error..!"),
-        }
+// enum CustomResult<T, E>{
+//     Ok(T),
+//     Err(E),
+// }
+// impl<T, E> CustomResult<T, E>{
+//     fn check_result(&self) -> String{
+//         match self{
+//             CustomResult::Ok(_) => String::from("Ok tested"),
+//             CustomResult::Err(_) => String::from("Nope error..!"),
+//         }
+//     }
+// }
+// fn main(){
+//     let a: CustomResult<i32, &str> = CustomResult::Ok(5);
+//     let b: CustomResult<i32, &str> = CustomResult::Err("hi");
+//     println!("{}",a.check_result());
+//     println!("{}", b.check_result());
+// }
+// 8. Create a function `increment_if_some(opt: Option<i32>) -> Option<i32>` that mimics `plus_one`, but also prints whether a number was incremented or skipped.
+
+fn increment_if_some(opt: Option<i32>) -> Option<i32>{
+    match opt{
+        Some(mut s) => {
+            s = s+1;
+            println!("Number was increment: {:?}",s);
+            Some(s)
+        },
+        None => {
+            println!("None was passed, so it is skipped");
+            None
+        },
     }
 }
 fn main(){
-    let a: CustomResult<i32, &str> = CustomResult::Ok(5);
-    let b: CustomResult<i32, &str> = CustomResult::Err("hi");
-    println!("{}",a.check_result());
-    println!("{}", b.check_result());
-}
-// 8. Create a function `increment_if_some(opt: Option<i32>) -> Option<i32>` that mimics `plus_one`, but also prints whether a number was incremented or skipped.
+    let a: Option<i32> = Some(49);
+    let b: Option<i32> = None;
 
+    let result1 = increment_if_some(a);
+    let result2 = increment_if_some(b);
+
+    let value1 = match result1{
+        Some(v) => v,
+        None => 0,
+    };
+    println!("{}", value1);
+}
 // 9. Replace all `match` expressions in the original code with `if let` or `while let` where possible. Explain each transformation in a comment.
 
 // 10. Write a test function that constructs one of each enum variant in the file, calls their associated functions or match expressions, and verifies expected behavior using `assert_eq!`.
