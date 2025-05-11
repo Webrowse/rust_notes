@@ -140,10 +140,10 @@
 // fn main(){
 //     let c = Shape::Circle(2.0);
 //     println!("Area of Circle: {}",c.area());
-    
+
 //     let r = Shape::Rectangle(2.0, 3.0);
 //     println!("Area of Rectangle: {}",r.area());
-    
+
 //     let s = Shape::Square(2.0);
 //     println!("Area of Square: {}",s.area());
 // }
@@ -200,7 +200,7 @@
 //     let b  = None;
 //     println!("{}",convert(b));
 // }
-// 6. Extend `UsState` with at least three more states. 
+// 6. Extend `UsState` with at least three more states.
 // Modify `value_in_cents` to print a different message depending on which state the quarter is from.
 // enum UsState{
 //     Delhi,
@@ -220,11 +220,10 @@
 //     println!("{}",value);
 // }
 
-// 7. Define a new enum `Result<T, E>` with variants `Ok(T)` and `Err(E)`. 
+// 7. Define a new enum `Result<T, E>` with variants `Ok(T)` and `Err(E)`.
 // Write a function that matches on this enum and handles success and error cases differently.
 
 // use std::fmt::format;
-
 
 // fn result_check<T,E>(res: Result<T,E>) -> String{
 //     match res{
@@ -261,33 +260,87 @@
 // }
 // 8. Create a function `increment_if_some(opt: Option<i32>) -> Option<i32>` that mimics `plus_one`, but also prints whether a number was incremented or skipped.
 
-fn increment_if_some(opt: Option<i32>) -> Option<i32>{
-    match opt{
-        Some(mut s) => {
-            s = s+1;
-            println!("Number was increment: {:?}",s);
-            Some(s)
-        },
-        None => {
-            println!("None was passed, so it is skipped");
-            None
-        },
+// fn increment_if_some(opt: Option<i32>) -> Option<i32>{
+//     match opt{
+//         Some(mut s) => {
+//             s = s+1;
+//             println!("Number was increment: {:?}",s);
+//             Some(s)
+//         },
+//         None => {
+//             println!("None was passed, so it is skipped");
+//             None
+//         },
+//     }
+// }
+// fn main(){
+//     let a: Option<i32> = Some(49);
+//     let b: Option<i32> = None;
+
+//     let result1 = increment_if_some(a);
+//     let result2 = increment_if_some(b);
+
+//     let value1 = match result1{
+//         Some(v) => v,
+//         None => 0,
+//     };
+//     println!("{}", value1);
+// }
+// 9. Replace all `match` expressions in the original code with `if let` or `while let` where possible. Explain each transformation in a comment.
+// fn increment_if_some(opt: Option<i32>) -> Option<i32> {
+//     if let Some(mut s) = opt{
+//         s = s + 1;
+//         println!("Number increment via if let: {:?}",s);
+//         Some(s)
+//     } else{
+//         println!("None was passed");
+//         None
+//     }
+// }
+// fn main() {
+//     let a: Option<i32> = Some(49);
+//     let b: Option<i32> = None;
+
+//     let result1 = increment_if_some(a);
+//     let result2 = increment_if_some(b);
+
+//     if let Some(v) = result1{
+//         println!("Value of i32: {}",v)
+//     }else{
+//         println!("none via if let");
+//     }
+//     if let Some(v) = result2{
+//         println!("value of i32: {}",v);
+//     }else{
+//         println!("i32 is not found");
+//     }
+// }
+// 10. Write a test function that constructs one of each enum variant in the file, calls their associated functions or match expressions, 
+// and verifies expected behavior using `assert_eq!`.
+#[derive(Debug, PartialEq)]
+enum Varient{
+    Number(i32),
+    Data(String),
+    Bolean(bool),
+    StString(&'static str),
+    CustResult(Result<i32,&'static str>),
+    CustOption(Option<i32>)
+}
+
+fn random_check(dat:Varient) -> String{
+    match dat{
+        Varient::Number(n) => format!("{:?}",n),
+        Varient::Data(s) => format!("{:?}",s),
+        Varient::Bolean(b) => format!("{:?}",b),
+        Varient::StString(st) => format!("{:?}",st),
+        Varient::CustResult( Res) => format!("{:?}",Res),
+        Varient::CustOption(op) => format!("{:?}",op),
     }
 }
 fn main(){
-    let a: Option<i32> = Some(49);
-    let b: Option<i32> = None;
+ let a = Varient::Number(45);
+ let b =random_check(a);
+ let c = assert_eq!("45",b);
+ println!("succesful tested");
 
-    let result1 = increment_if_some(a);
-    let result2 = increment_if_some(b);
-
-    let value1 = match result1{
-        Some(v) => v,
-        None => 0,
-    };
-    println!("{}", value1);
 }
-// 9. Replace all `match` expressions in the original code with `if let` or `while let` where possible. Explain each transformation in a comment.
-
-// 10. Write a test function that constructs one of each enum variant in the file, calls their associated functions or match expressions, and verifies expected behavior using `assert_eq!`.
-
