@@ -226,19 +226,38 @@
 // use std::fmt::format;
 
 
-fn result_check<T,E>(res: Result<T,E>) -> String{
-    match res{
-        Ok(_)=> String::from("test is ok: {}"),
-        Err(_)=> String::from("Error is here: {}"),
+// fn result_check<T,E>(res: Result<T,E>) -> String{
+//     match res{
+//         Ok(_)=> String::from("test is ok: {}"),
+//         Err(_)=> String::from("Error is here: {}"),
+//     }
+// }
+
+// fn main(){
+//     let a: Result<i32, &str> = Ok(10);
+//     let b: Result<i32, &str> = Err("hehe");
+
+//     println!("{}", result_check(a));
+//     println!("{}", result_check(b));
+// }
+
+enum CustomResult<T, E>{
+    Ok(T),
+    Err(E),
+}
+impl<T, E> CustomResult<T, E>{
+    fn check_result(&self) -> String{
+        match self{
+            CustomResult::Ok(_) => String::from("Ok tested"),
+            CustomResult::Err(_) => String::from("Nope error..!"),
+        }
     }
 }
-
 fn main(){
-    let a: Result<i32, &str> = Ok(10);
-    let b: Result<i32, &str> = Err("hehe");
-
-    println!("{}", result_check(a));
-    println!("{}", result_check(b));
+    let a: CustomResult<i32, &str> = CustomResult::Ok(5);
+    let b: CustomResult<i32, &str> = CustomResult::Err("hi");
+    println!("{}",a.check_result());
+    println!("{}", b.check_result());
 }
 // 8. Create a function `increment_if_some(opt: Option<i32>) -> Option<i32>` that mimics `plus_one`, but also prints whether a number was incremented or skipped.
 
