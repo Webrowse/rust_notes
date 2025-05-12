@@ -4,7 +4,7 @@
 
 // fn main() {
 //     // ---------- VECTORS ----------
-//     let mut numbers = vec![10, 20, 30];
+    // let mut numbers = vec![10, 20, 30];
 //     numbers.push(40);
 //     numbers.push(50);
 
@@ -62,12 +62,36 @@
 
 // 1 . Create a vector of strings, add three items, remove the last, print all remaining.
 
-fn main(){
-    let mut vos = vec!["a", "b", "c"];
-    vos.push("d");
-    vos.push("e");
-    vos.push("f");
+// fn main(){
+//     let mut vos = vec!["a", "b", "c"];
+//     vos.push("d");
+//     vos.push("e");
+//     vos.push("f");
 
-    vos.pop();
-    println!("{:?}",vos);
+//     vos.pop();
+//     println!("{:?}",vos);
+// }
+
+//2. Access vector index safely with .get() and handle out-of-bounds with match.
+
+// fn main (){
+//     let x = vec![2,4,6,8,10];
+//     match x.get(4){
+//         Some(x) => println!("{}",x),
+//         None => println!("hehehe"),
+//     };
+//     match x.get(6){
+//         Some(x) => println!("{}",x),
+//         None => println!("hehehe"),
+//     };
+// }
+
+// 3. Iterate over a vector with mutable references and increment each value by 1.
+
+fn main(){
+    let mut vec = vec![1,3,5,7,9];
+    for x in &mut vec{
+        *x +=1;
+    }
+    println!("{:?}",vec);
 }
