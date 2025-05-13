@@ -88,10 +88,35 @@
 
 // 3. Iterate over a vector with mutable references and increment each value by 1.
 
+// fn main(){
+//     let mut vec = vec![1,3,5,7,9];
+//     for x in &mut vec{
+//         *x +=1;
+//     }
+//     println!("{:?}",vec);
+// }
+
+// 4. Create a vector, remove elements with .pop() in a loop until empty, printing each removed item.
+// fn main(){
+//     let mut vec = vec![1,3,5,7,9];
+//     while let Some(val) = vec.pop() {
+//         println!("{}",val);
+//     }
+// }
+
+// 5 . Create a Hashmap with three key-value pairs, then overwrite one key's value.
+
+use std::collections::HashMap;
 fn main(){
-    let mut vec = vec![1,3,5,7,9];
-    for x in &mut vec{
-        *x +=1;
-    }
-    println!("{:?}",vec);
+    let mut data = HashMap::new();
+    data.insert(String::from("Adarsh"), 100);
+    data.insert(String::from("Babu"), 70);
+    data.insert(String::from("Captain"), 40);
+
+    println!("{:?}", data);
+
+    data.insert(String::from("Adarsh"), 121);
+
+    println!("{:?}", data);
 }
+
