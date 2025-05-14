@@ -106,17 +106,106 @@
 
 // 5 . Create a Hashmap with three key-value pairs, then overwrite one key's value.
 
+// use std::collections::HashMap;
+// fn main(){
+//     let mut data = HashMap::new();
+//     data.insert(String::from("Adarsh"), 100);
+//     data.insert(String::from("Babu"), 70);
+//     data.insert(String::from("Captain"), 40);
+
+//     println!("{:?}", data);
+
+//     data.insert(String::from("Adarsh"), 121);
+
+//     println!("{:?}", data);
+// }
+
+// 6. Use .get() on a HashMap for a key that might not exist, handle both outcomes.
+
+// use std::collections::HashMap;
+// fn main(){
+//     let mut dummy = HashMap::new();
+//     dummy.insert("romy", 3);
+//     dummy.insert("adarsh", 23);
+
+
+//     let index = "adarsh";
+//     match dummy.get(&index){
+//         Some(something) => println!("found: {}", something),
+//         None => println!("ho"),
+//     }
+// }
+
+// 7. Iterate over a Hashmap and print all key-value pairs.
+
+// use std::collections::HashMap;
+
+// fn main(){
+//     let mut hm1  =  HashMap::new();
+//     hm1.insert("a", 1);
+//     hm1.insert("b", 2);
+//     hm1.insert("c", 3);
+//     hm1.insert("d", 4);
+//     hm1.insert("e", 5);
+
+    
+//     for (k,v) in &hm1{
+//         println!("{}, {}", k,v)
+//     }
+//     println!("{:?}",hm1);
+// }
+
+// 8. Use .entry().or_insert() to conditionally insert a new key in a Hashmap.
+
+// use std::collections::HashMap;
+
+// fn main(){
+//     let mut x = HashMap::new();
+//     x.insert("a",10);
+//     x.insert("b",20);
+//     x.insert("c",33);
+
+//     println!("{:?}",x);
+
+//     x.entry("c").or_insert(45);
+//     x.entry("d").or_insert(35);
+
+//     println!("{:?}",x);
+// }
+
+// 9 .Count occurrences of words in a string using a HashMap.
+// use std::collections::HashMap;
+
+// fn main(){
+//     let x = "a b c a b f";
+//     let y = x.split_whitespace();
+//     // println!("{:?}",y);
+//     let mut count: HashMap<&str,i32> = HashMap::new();
+//     for a in y{
+//         println!("{:?},",a);
+//         *count.entry(a).or_insert(0) += 1;
+//     }
+//     println!("{:?}",count);
+// }
+
+// 10. Store and update scores for players in a game, where new players start with 0 and gain points.
+
 use std::collections::HashMap;
-fn main(){
-    let mut data = HashMap::new();
-    data.insert(String::from("Adarsh"), 100);
-    data.insert(String::from("Babu"), 70);
-    data.insert(String::from("Captain"), 40);
 
-    println!("{:?}", data);
-
-    data.insert(String::from("Adarsh"), 121);
-
-    println!("{:?}", data);
+fn counts<'a>(goal:&Vec<&'a str>) -> HashMap<&'a str,u8> {
+    let mut hm: HashMap<&str,u8> = HashMap::new();
+    for &color in goal{
+        *hm.entry(color).or_insert(0)+=1;
+    }
+    hm
 }
 
+fn main(){
+    let mut x = vec![];
+    x.push("red");
+    x.push("pink");
+    x.push("blue");
+
+    let hm = counts(&x);
+    println!("{:?}",hm);
+}
