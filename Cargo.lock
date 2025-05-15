@@ -49,3 +49,7 @@ version = "0.1.0"
 [[package]]
 name = "variable"
 version = "0.1.0"
+
+[[package]]
+name = "vector_methods"
+version = "0.1.0"
