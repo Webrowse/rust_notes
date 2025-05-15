@@ -1,4 +1,4 @@
-use std::num::ParseIntError;
+
 
 
 fn main2() {
@@ -71,9 +71,26 @@ fn main(){
     let even:Vec<_> = vec5.iter().filter(|&x|*x%2 == 0).collect();
     println!("{:?}",even);
     // 6. Implement a sum aggregator with `fold` that returns the product of all elements instead of the sum.
+    let vec6 = vec![3,2,4,5,6,1];
+    let prod = vec6.iter().fold(1 ,| acc,x|acc * *x);
+    println!("{:?}",prod);
     // 7. Use `any` to check if any number in a vector is divisible by 7. Return the boolean result.
+    let vec7 = vec![3,6,8,9,12,21];
+    let any7 = vec7.iter().any(|x|x%7==0);
+    println!("{:?}",any7);
     // 8. Use `all` to check if all elements in a vector are positive and less than 100. Return the boolean result.
+    let vec8 = vec![2,56,82,1,34];
+    let less_cent = vec8.iter().all(|x|*x<100);
+    println!("{}",less_cent);
     // 9. Iterate over a vector with `enumerate` and build a `Vec<String>` of the form `"Index X: Value Y"`.
+    let vec9 = vec!["abc".to_string(),"def".to_string(),"ghi".to_string()];
+    let index_value: Vec<_> = vec9.iter()
+    .enumerate()
+    .map(|(i, val)|format!("Index {}: Value {}",i,val)).collect();
+println!("{:?}",index_value);
     // 10. Combine `filter`, `map`, and `collect` to return the squares of all odd numbers in a vector.
+    let vec10 = vec![3,4,5,8,10,11];
+    let f_m_c: Vec<_> = vec10.iter().filter(|&x|*x%2==1).map(|x|x * x).collect();
+    println!("{:?}",f_m_c);
     
 }
