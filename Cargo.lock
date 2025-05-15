@@ -43,6 +43,10 @@ name = "references_and_slicing"
 version = "0.1.0"
 
 [[package]]
+name = "string_methods"
+version = "0.1.0"
+
+[[package]]
 name = "structs_and_impl"
 version = "0.1.0"
 

@@ -76,7 +76,7 @@ vec8.remove(3);
 println!("new vec8: {:?}",vec8);
 // 9. Push integers 1 to 100 into a vector using a loop. Then pop 10 times. Print length and last value.
 let mut vec9:Vec<i32> = Vec::new();
-for i in 1..=100{
+for i in 1..=100{ 
     vec9.push(i);
 }
 for i in 0..10{
