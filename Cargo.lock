@@ -23,6 +23,10 @@ name = "enums_and_match"
 version = "0.1.0"
 
 [[package]]
+name = "error_handling_result_n_option"
+version = "0.1.0"
+
+[[package]]
 name = "foundation_concept-1"
 version = "0.1.0"
 
