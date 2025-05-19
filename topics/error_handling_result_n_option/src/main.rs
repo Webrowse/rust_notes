@@ -47,133 +47,107 @@
 //     Ok(contents)
 // }
 
-use std::{fs::{File, OpenOptions}, io::{self, Read, Write}};
-
-
-
-// 1. Create an `Option<String>` with some value, then print the inner string only if it exists.
-fn main(){
-    let first:Option<i32> = Some(3);
-    if let Some(n) = first{
-        println!("Exercise 1: first is: {:?}",Some(n));
-    }
-
-
-// 2. Create a function `double_if_some(x: Option<i32>) -> Option<i32>` that returns double the value if `Some`, else `None`.
-fn double_if_some(x: Option<i32>) -> Option<i32>{
-    match x{
-        Some(x) => Some(2 * x),
-        None => None
-    }
-}
-let second = double_if_some(Some(4));
-println!("Exercise 2: {:?}",second);
-
-// 3. Use `unwrap_or` on `Option<&str>` to provide a default string if `None`.
-let s:Option<&str> = None;
-let t = s.unwrap_or("hi");
-println!("Exercise 3: {:?}",t);
-// 4. Use `match` on an `Option<i32>` to add 5 if it exists, else subtract 1 from zero.
-let a:Option<i32> = Some(2);
-match a{
-    Some(n)=> {
-        println!("Exercise 4: {:?}",n+5);
-        n+5
-    }
-    None => {
-        println!("Exercise 4: -1");
-        -1
-    }
+use std::{
+    fs::{File, OpenOptions},
+    io::{self, Read, Write},
 };
 
+// 1. Create an `Option<String>` with some value, then print the inner string only if it exists.
+fn main() {
+    let first: Option<i32> = Some(3);
+    if let Some(n) = first {
+        println!("Exercise 1: first is: {:?}", Some(n));
+    }
 
-// 5. Attempt to open a non-existent file with `File::open` and handle it using `match`.
-let file = File::open("demo.txt");
-match file{
-    Ok(t) => println!("Success opening file: {:?}",t),
-    Err(e) => println!("Err opening file: {:?}",e),
-}
-// 6. Write a function `open_or_create(path: &str) -> File` using `unwrap_or_else` to create the file if it doesn’t exist.
-fn open_or_create(path: &str) -> File {
-    // let open_file = File::open(path);
-    // match open_file{
-    //     Ok(t) => {
-    //         println!("ex 6. OK file");
-    //         t
-    //     },
-    //     Err(_e) => {
-    //         let new_file= File::create(path);
-    //         println!("Ex 6, A new file named {} has been created",path);
-    //         new_file.expect("hi ee toh hona hi tha")
-    //     }
-    // }
-    File::open(path).unwrap_or_else(|_|{
-        println!("New file '{}' created",path);
-        File::create(path).expect("Some error while creating a new file")
-    })
-}
-open_or_create("third.txt");
-// 7. Write a function `read_lines(path: &str) -> Result<Vec<String>, io::Error>` that reads all lines from a file using `?`.
-fn read_lines(path: &str) -> Result<Vec<String>, io::Error> {
-    let mut f = File::open(path)?;
-    let mut content = String::new();
-    f.read_to_string(&mut content)?;
-    
-    let lines: Vec<String> = content.lines().map(|line|line.to_string()).collect();
-    Ok(lines)
-}
-let ex7 = read_lines("demo.txt");
-match ex7{
-    Ok(s) => println!("{:?}",s),
-    Err(e) => println!("Some error: {:?}",e),
-}
-// 8. Create a vector of `Option<i32>`, then filter and sum all `Some` values.
-// inefficient way
-// let vo: Vec<Option<i32>> = vec![Some(2),Some(4),None, Some(2)];
-// let sumvo: Vec<_> = vo.into_iter().filter(|n|*n!=None).collect();
-// let normal: Vec<_> = sumvo.into_iter().flatten().collect();
-// let ex8 = normal.iter().fold(0,|acc, n| acc + *n);
-// println!("{}",ex8);
-// efficient way:-
-let vo: Vec<Option<i32>> = vec![Some(2),Some(3), None, Some(4)];
-let sum_of_option: i32 = vo.iter().flatten().sum();
-println!("exercise 8: {}",sum_of_option);
+    // 2. Create a function `double_if_some(x: Option<i32>) -> Option<i32>` that returns double the value if `Some`, else `None`.
+    fn double_if_some(x: Option<i32>) -> Option<i32> {
+        match x {
+            Some(x) => Some(2 * x),
+            None => None,
+        }
+    }
+    let second = double_if_some(Some(4));
+    println!("Exercise 2: {:?}", second);
 
-// 9. Write a function `safe_divide(a: i32, b: i32) -> Option<i32>` that returns `None` if `b` is zero.
-println!("exercise 9: a=2, b=0: {:?}",safe_divide(2, 0));
-println!("          : a=2, b=2: {:?}",safe_divide(2, 2));
-// 10. Write a function `try_append(path: &str, text: &str) -> Result<(), io::Error>` that appends text to a file or returns the error.
-fn try_append(path: &str, text: &str) -> Result<(),io::Error> {
-    let mut f = OpenOptions::new()
-    .append(true)
-    .create(true)
-    .open(path)?;
+    // 3. Use `unwrap_or` on `Option<&str>` to provide a default string if `None`.
+    let s: Option<&str> = None;
+    let t = s.unwrap_or("hi");
+    println!("Exercise 3: {:?}", t);
+    // 4. Use `match` on an `Option<i32>` to add 5 if it exists, else subtract 1 from zero.
+    let a: Option<i32> = Some(2);
+    match a {
+        Some(n) => {
+            println!("Exercise 4: {:?}", n + 5);
+            n + 5
+        }
+        None => {
+            println!("Exercise 4: -1");
+            -1
+        }
+    };
 
-    f.write_all(text.as_bytes())?;
-    Ok(())
-}
-try_append("demo.txt", "Hi there !!").expect("append_call failed");
-// Reading a file from HDD
-fn read_a_file(path: &str) {
-    let mut f = File::open(path).expect("error while opening file");
-    let mut content = String::new();
-    f.read_to_string(&mut content).expect("error while read_to_string");
-    println!("{}",content);
-}
-read_a_file("demo.txt");
+    // 5. Attempt to open a non-existent file with `File::open` and handle it using `match`.
+    let file = File::open("demo.txt");
+    match file {
+        Ok(t) => println!("Success opening file: {:?}", t),
+        Err(e) => println!("Err opening file: {:?}", e),
+    }
+    // 6. Write a function `open_or_create(path: &str) -> File` using `unwrap_or_else` to create the file if it doesn’t exist.
+    fn open_or_create(path: &str) -> File {
+        File::open(path).unwrap_or_else(|_| {
+            println!("New file '{}' created", path);
+            File::create(path).expect("Some error while creating a new file")
+        })
+    }
+    open_or_create("third.txt");
+    // 7. Write a function `read_lines(path: &str) -> Result<Vec<String>, io::Error>` that reads all lines from a file using `?`.
+    fn read_lines(path: &str) -> Result<Vec<String>, io::Error> {
+        let mut f = File::open(path)?;
+        let mut content = String::new();
+        f.read_to_string(&mut content)?;
 
-// Testing overwrite
-fn overwrite_a_file(path: &str) {
-    let mut f = File::create(path).expect("ow failed");
-    f.write_all(b"overwrite_a_file did this").expect("overwriet failed");
+        let lines: Vec<String> = content.lines().map(|line| line.to_string()).collect();
+        Ok(lines)
+    }
+    let ex7 = read_lines("demo.txt");
+    match ex7 {
+        Ok(s) => println!("{:?}", s),
+        Err(e) => println!("Some error: {:?}", e),
+    }
+    // 8. Create a vector of `Option<i32>`, then filter and sum all `Some` values.
+    let vo: Vec<Option<i32>> = vec![Some(2), Some(3), None, Some(4)];
+    let sum_of_option: i32 = vo.iter().flatten().sum();
+    println!("exercise 8: {}", sum_of_option);
+
+    // 9. Write a function `safe_divide(a: i32, b: i32) -> Option<i32>` that returns `None` if `b` is zero.
+    println!("exercise 9: a=2, b=0: {:?}", safe_divide(2, 0));
+    println!("          : a=2, b=2: {:?}", safe_divide(2, 2));
+    // 10. Write a function `try_append(path: &str, text: &str) -> Result<(), io::Error>` that appends text to a file or returns the error.
+    fn try_append(path: &str, text: &str) -> Result<(), io::Error> {
+        let mut f = OpenOptions::new().append(true).create(true).open(path)?;
+
+        f.write_all(text.as_bytes())?;
+        Ok(())
+    }
+    try_append("demo.txt", "Hi there !!").expect("append_call failed");
+    // Reading a file from HDD
+    fn read_a_file(path: &str) {
+        let mut f = File::open(path).expect("error while opening file");
+        let mut content = String::new();
+        f.read_to_string(&mut content)
+            .expect("error while read_to_string");
+        println!("{}", content);
+    }
+    read_a_file("demo.txt");
+
+    // Testing overwrite
+    fn overwrite_a_file(path: &str) {
+        let mut f = File::create(path).expect("ow failed");
+        f.write_all(b"overwrite_a_file did this")
+            .expect("overwriet failed");
+    }
+    overwrite_a_file("demo.txt");
 }
-overwrite_a_file("demo.txt");
-}
-fn safe_divide(a:i32, b:i32) -> Option<i32>{
-    // let res = match b{
-    //     0  => None,
-    //     _ => Some(a / b),
-    //     };
-    //     res
-    if b == 0 {None} else {Some(a/b)}
+fn safe_divide(a: i32, b: i32) -> Option<i32> {
+    if b == 0 { None } else { Some(a / b) }
 }
