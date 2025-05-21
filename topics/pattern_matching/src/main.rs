@@ -46,8 +46,9 @@ match age{
 // 6. Destructure nested tuples: `((x, y), z)` and print all three values.
 let ((x,y),z) = ((2,3),4);
 println!("{},{},{}",x,y,z);
+
 // 7. Define a `struct User { id: u32, name: String }`, destructure it in a match block.
-struct User{ id: u32, name: String };
+struct User{ id: u32, name: String }
 let user: User = User{ id: 1, name: String::from("Hello there")};
 match user{
     User{id,name} => println!("{:?}, {:?}",id,name)
@@ -56,6 +57,11 @@ match user{
 enum Shape{
     Circle(f64),
     Rectangle(f64,f64),
+}
+let sha: Shape = Shape::Circle(2.0);
+match sha{
+    Shape::Circle(n) => println!("{}", std::f64::consts::PI * n * n),
+    Shape::Rectangle(l,m) => println!("{}", l * m)
 }
 
 // 9. Use `_` to ignore unused fields in tuple and struct destructuring.
