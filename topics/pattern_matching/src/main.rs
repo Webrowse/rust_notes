@@ -65,7 +65,21 @@ match sha{
 }
 
 // 9. Use `_` to ignore unused fields in tuple and struct destructuring.
+let (a, _, c) = (4,2,5);
+println!("{},{}",a,c);
 // 10. Combine match guards with struct destructuring to filter users older than 18.
+struct Voters<'a>{
+    name: &'a str,
+    age: u32
+}
+let vote = Voters{name:"romy",age: 12};
+match vote{
+    Voters{name, age} if age<18 => println!("Underage: {name}({age})"),
+    Voters{name, age} if age>18 && age<60 => println!("Right age: {name}({age})"),
+    Voters{name, age} if age>=60 => println!("Old age: {name}({age})"),
+    _ => println!("invalid"),
+}
+
 println!("****************************");
 }
 fn main() {
