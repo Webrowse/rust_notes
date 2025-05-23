@@ -1,10 +1,78 @@
+
+
+
 // Exercises
 fn main2(){
-    //1. Define a second struct Tweet with fields and implement Summary for it. Pass it to notify.
+    // 1. Define a second struct Tweet with fields and implement Summary for it. Pass it to notify.
+    trait Summary{
+        fn summarize(&self) -> String;
+    }
+    struct Tweet{
+        content: String,
+        name: String
+    }
+    impl Summary for Tweet {
+        fn summarize(&self) -> String {
+            format!("{} by: {}", self.content, self.name)
+        }
+    }
+    fn notify<T: Summary>(item:T){
+        println!("notify this: {}",item.summarize());
+    }
+    let tweet_work = Tweet{content: "the topic of tweet".to_string(), name: "Romy".to_string()};
+    notify(tweet_work);
     //2. Create a function compare<T: PartialOrd>(a: T, b: T) that prints which value is greater. Test with integers and floats.
+    fn compare<T: PartialOrd+std::fmt::Display>(a: T, b: T){
+        if a > b {println!("{} is greater than {}",a,b)} else{println!("{} is greater than {}",b,a)}
+    }
+    compare(3, 5);
+    compare(2.3, 2.4);
     //3. Modify Point<T> to implement a method swap() that swaps x and y. Require T: Clone.
+    use std::fmt::Display;
+    struct Point<T>{
+        x: T,
+        y: T,
+    }
+    trait Modify {
+        fn swap(&mut self);
+    }
+    impl <T: Clone + Display> Modify for Point<T>{
+        fn swap(&mut self) {
+            println!("Before Swap: x = {} and y = {}",self.x,self.y);
+            let temp = self.x.clone();
+            self.x = self.y.clone();
+            self.y = temp;
+            println!("After Swap: x = {} and y = {}",self.x,self.y);
+        }
+    }
+    fn swappy <T: Modify>(mut inp: T) {
+        inp.swap();
+    }
+    let p = Point{x:10,y:12};
+    swappy(p);
+
     //4. Implement Summary for Point<String>, return a formatted coordinate string. Use notify on it.
+    impl Summary for Point<String>{
+        fn summarize(&self) -> String {
+            format!("The coordinates are ({}, {})",self.x,self.y)
+        }
+    }
+    
+    let ex4 = Point{
+        x: "3.4332".to_string(),
+        y: "7.5439".to_string()
+    };
+    notify(ex4);
+
     //5. Create a function print_summary<T: Summary>(item: &T) that uses a reference instead of ownership.
+    fn print_summary<T: Summary>(item: &T){
+        println!("print_summary: {}",item.summarize());
+    }
+    let prin_sum = Point{
+        x: String::from("34°23'16'' N"),
+        y: String::from("98°73'54'' S")
+    };
+    print_summary(&prin_sum);
     //6. Add a second trait Displayable and implement both Summary and Displayable for Article. Write a function requiring T: Summary + Displayable.
     //7. Create a trait Distance with method distance_from_origin(&self) -> f64. Implement for Point<f64>.
     //8. Make Point<T> have a method mixup<U>(self, other: Point<U>) -> Point<T> that creates a new point from self.x and other.y.
@@ -41,6 +109,8 @@ struct Point<T> {
 }
 
 fn main() {
+    main2();
+    println!("*******************");
     let post = Article {
         title: String::from("Rust Hits 2.0"),
         author: String::from("Adarsh"),
