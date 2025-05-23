@@ -1,4 +1,4 @@
-
+use std::fmt::Display;
 
 
 // Exercises
@@ -28,7 +28,6 @@ fn main2(){
     compare(3, 5);
     compare(2.3, 2.4);
     //3. Modify Point<T> to implement a method swap() that swaps x and y. Require T: Clone.
-    use std::fmt::Display;
     struct Point<T>{
         x: T,
         y: T,
@@ -52,7 +51,7 @@ fn main2(){
     swappy(p);
 
     //4. Implement Summary for Point<String>, return a formatted coordinate string. Use notify on it.
-    impl Summary for Point<String>{
+    impl<T: Display> Summary for Point<T>{
         fn summarize(&self) -> String {
             format!("The coordinates are ({}, {})",self.x,self.y)
         }
@@ -74,6 +73,20 @@ fn main2(){
     };
     print_summary(&prin_sum);
     //6. Add a second trait Displayable and implement both Summary and Displayable for Article. Write a function requiring T: Summary + Displayable.
+    trait Displayable{
+        fn sometin(&self);
+    }
+    impl Displayable for Point<i32>{
+        fn sometin(&self) {
+            println!("double of ({}) is ({:#?})",self.x, self.x * 2);
+        }
+    }
+    fn ex6 <T: Summary + Displayable>(item: T){
+        item.summarize();
+        item.sometin();
+    }
+    ex6(Point{x:5,y:9});
+
     //7. Create a trait Distance with method distance_from_origin(&self) -> f64. Implement for Point<f64>.
     //8. Make Point<T> have a method mixup<U>(self, other: Point<U>) -> Point<T> that creates a new point from self.x and other.y.
     //9. Write a generic function largest<T: PartialOrd + Copy>(list: &[T]) -> T. Test with arrays of numbers.
