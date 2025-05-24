@@ -1,4 +1,5 @@
 use std::fmt::Display;
+use std::clone::Clone;
 
 
 // Exercises
@@ -28,7 +29,7 @@ fn main2(){
     compare(3, 5);
     compare(2.3, 2.4);
     //3. Modify Point<T> to implement a method swap() that swaps x and y. Require T: Clone.
-    struct Point<T>{
+    struct Point<T: Clone>{
         x: T,
         y: T,
     }
@@ -51,7 +52,7 @@ fn main2(){
     swappy(p);
 
     //4. Implement Summary for Point<String>, return a formatted coordinate string. Use notify on it.
-    impl<T: Display> Summary for Point<T>{
+    impl<T: Display + std::clone::Clone> Summary for Point<T>{
         fn summarize(&self) -> String {
             format!("The coordinates are ({}, {})",self.x,self.y)
         }
@@ -88,8 +89,63 @@ fn main2(){
     ex6(Point{x:5,y:9});
 
     //7. Create a trait Distance with method distance_from_origin(&self) -> f64. Implement for Point<f64>.
-    //8. Make Point<T> have a method mixup<U>(self, other: Point<U>) -> Point<T> that creates a new point from self.x and other.y.
+    trait Distance{
+        fn distance_from_origin(&self) -> f64;
+    }
+    impl Distance for Point<f64>{
+        fn distance_from_origin(&self) -> f64 {
+            ((self.x).powi(2) + (self.y).powi(2)).sqrt()
+        }
+    }
+    fn exercise7<T:Distance>(inp: T){
+        println!("Implemented : {:.2}",inp.distance_from_origin());
+    }
+    // let point_first = Point{
+    //     x: 3.45,
+    //     y: 7.34
+    // };
+    // let point_second = Point{
+    //     x: 8.25,
+    //     y: 1.34
+    // };
+    // fn dist(s:&Point<f64>, t:&Point<f64>) -> f64{
+    //     let sqnum = (s.x - t.x) * (s.x - t.x) + (s.y - t.y) * (s.y - t.y);
+    //     sqnum.sqrt()
+    // }
+    // println!("{}",dist(&point_first, &point_second));
+    let point_from_origin:Point<f64> = Point { x: 3.4, y: 6.8 };
+    exercise7(point_from_origin);
+    //8. Make Points<T> have a method mixup<U>(self, other: Points<U>) -> Points<T> that creates a new point from self.x and other.y.
+    #[derive(Debug)]
+    struct Points<T>{
+        x: T,
+        y: T
+    }
+    impl<T> Points<T>{
+        fn mixup<U>(self, other: Points<U>) -> Points<T> where U: Into<T>{
+            Points { 
+                x: self.x, 
+                y: other.y.into()
+            }
+        }
+    }
+    
+    let p1= Points{
+        x: 5,
+        y: 10
+    };
+    let p2= Points{
+        x: 2,
+        y: 8
+    };
+    
+    println!("{:?}",p1.mixup(p2));
     //9. Write a generic function largest<T: PartialOrd + Copy>(list: &[T]) -> T. Test with arrays of numbers.
+    fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
+        list.iter().copied().fold(list[0],|acc, item| if acc > item { acc }else{item})
+    }
+    let exv9 = vec![2,1,3,4];
+    println!("{}",largest(&exv9));
     //10. Implement default method in trait Summary called summarize_author(&self) -> String that returns "Unknown author" unless overridden. Override in Article.
 }
 
