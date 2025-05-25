@@ -1,5 +1,6 @@
 use std::fmt::Display;
 use std::clone::Clone;
+use std::net::ToSocketAddrs;
 
 
 // Exercises
@@ -7,6 +8,7 @@ fn main2(){
     // 1. Define a second struct Tweet with fields and implement Summary for it. Pass it to notify.
     trait Summary{
         fn summarize(&self) -> String;
+  
     }
     struct Tweet{
         content: String,
@@ -147,11 +149,39 @@ fn main2(){
     let exv9 = vec![2,1,3,4];
     println!("{}",largest(&exv9));
     //10. Implement default method in trait Summary called summarize_author(&self) -> String that returns "Unknown author" unless overridden. Override in Article.
+    trait SummaryWithAuthor{
+        fn summary(&self) -> String;
+        fn summarize_author(&self) -> String{
+            "Unknown Author".to_string()
+        }
+    }
+    struct NewArticle{
+        title: String,
+        author: String
+    }
+    impl SummaryWithAuthor for NewArticle{
+        fn summary(&self) -> String {
+            // let n = "".to_string();
+            let author = if self.author.is_empty() {self.summarize_author()} else {self.author.clone()};
+            format!("post title: {} is written by: {}",self.title,author)
+        }
+    }
+    fn lets_connect<T:SummaryWithAuthor>(inp:T){
+        println!("{}",inp.summary());
+    }
+    let newPost = NewArticle{
+        title: "My Article".to_string(),
+        author: " ".trim().to_string(),
+    };
+    lets_connect(newPost);
+
+
 }
 
 // Define a trait (like an interface)
 trait Summary {
     fn summarize(&self) -> String;
+
 }
 
 // Implement the trait for a struct
