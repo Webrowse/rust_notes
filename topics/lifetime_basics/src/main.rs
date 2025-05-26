@@ -15,10 +15,27 @@
     }
 // 2. Create `shortest<'a>(x: &'a str, y: &'a str) -> &'a str`
 //    Mimic the logic of `longest` but return the shortest string.
-
+fn shortest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() < y.len() { x } else { y }
+}
+fn exercise2(){
+    let a = "yes";
+    let b = "yeah";
+    let c = shortest(&a, &b);
+    println!("{}",c);
+}
 // 3. Define `struct Label<'a> { text: &'a str }`
 //    Write a function `print_label(label: &Label)` that prints `label.text`.
-
+struct Label<'a>{
+    text: &'a str
+}
+fn print_label(label: &Label){
+    println!("{}",label.text);
+}
+fn exercise3(){
+    let la = Label{text: "hello"};
+    print_label(&la);
+}
 // 4. Write a function `wrap_in_excerpt<'a>(text: &'a str) -> ImportantExcerpt<'a>`
 //    Return an `ImportantExcerpt` with the input string as the field.
 
@@ -109,4 +126,6 @@ fn main() {
     example_2();
     println!("{}", static_str());
     exercise1();
+    exercise2();
+    exercise3();
 }
