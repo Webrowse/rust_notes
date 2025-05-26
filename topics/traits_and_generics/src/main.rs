@@ -1,6 +1,5 @@
 use std::fmt::Display;
 use std::clone::Clone;
-use std::net::ToSocketAddrs;
 
 
 // Exercises

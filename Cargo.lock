@@ -39,6 +39,10 @@ name = "iterators_and_methods"
 version = "0.1.0"
 
 [[package]]
+name = "lifetime_basics"
+version = "0.1.0"
+
+[[package]]
 name = "modules_and_visibility"
 version = "0.1.0"
 

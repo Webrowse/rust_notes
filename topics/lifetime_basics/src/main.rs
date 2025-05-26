@@ -1,0 +1,112 @@
+// lifetimes_basics.rs
+// 1. Implement `longest_of_three<'a>(a: &'a str, b: &'a str, c: &'a str) -> &'a str`
+//    Use conditional logic to return the longest string among three.
+    fn longest_of_three<'a>(a: &'a str, b: &'a str, c:&'a str) -> &'a str {
+        if a.len() > b.len() && a.len() > c.len(){ a }
+        else if b.len() > c.len() && b.len() > a.len() { b }
+        else { c }
+    }
+    fn exercise1(){
+        let x = String::from("hi");
+        let y = String::from("hiiiiiii");
+        let z = String::from("hello");
+        let res = longest_of_three(&x, &y, &z);
+        println!("{}",res);
+    }
+// 2. Create `shortest<'a>(x: &'a str, y: &'a str) -> &'a str`
+//    Mimic the logic of `longest` but return the shortest string.
+
+// 3. Define `struct Label<'a> { text: &'a str }`
+//    Write a function `print_label(label: &Label)` that prints `label.text`.
+
+// 4. Write a function `wrap_in_excerpt<'a>(text: &'a str) -> ImportantExcerpt<'a>`
+//    Return an `ImportantExcerpt` with the input string as the field.
+
+// 5. Attempt to return a reference to a local string inside a function
+//    Observe the compiler error: `returns a reference to data owned by the current function`.
+
+// 6. Implement `compare_and_return<'a>(x: &'a str, y: &'a str) -> &'a str`
+//    Include an inner block where one input is declared. Ensure no compile error.
+
+// 7. Write a function `split_and_return<'a>(s: &'a str) -> &'a str`
+//    Return the first sentence from the input string using `.split('.')`.
+
+// 8. Pass a string literal and a `String` reference to `longest`
+//    Observe type compatibility between `&'static str` and `&String`.
+
+// 9. Build `struct Container<'a> { item: Option<&'a str> }`
+//    Implement a method `get(&self) -> Option<&'a str>`.
+
+// 10. Manually cause a dangling reference by creating a reference in an inner block and returning it
+//     Force a lifetime error. Refactor to fix it using proper scopes.
+
+
+// ----------- Example 1: function that returns one of two string references -----------
+
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    // both x and y must live as long as lifetime 'a
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+fn example_1() {
+    let s1 = String::from("short");
+    let s2 = String::from("a bit longer");
+    let result = longest(&s1, &s2);
+    println!("Longest: {}", result); // prints: a bit longer
+}
+
+// ----------- Example 2: lifetime prevents returning a dangling reference -----------
+
+// This won't compile:
+// fn invalid_ref() -> &str {
+//     let s = String::from("oops");
+//     &s // ❌ error: s is dropped at end of function
+// }
+
+// ----------- Example 3: Structs holding references need lifetime annotations -----------
+
+struct Book<'a> {
+    title: &'a str,
+}
+
+fn example_2() {
+    let t = String::from("Rust in Action");
+    let b = Book { title: &t };
+    println!("Book title: {}", b.title); // prints: Rust in Action
+}
+
+// ----------- Example 4: Lifetime elision rules -----------
+
+// In many cases, Rust can infer lifetimes and you don’t have to write them explicitly.
+
+fn print_str(s: &str) {
+    // works fine without specifying lifetimes
+    println!("{}", s);
+}
+
+// ----------- Example 5: Static lifetime -----------
+
+// 'static means the data lives for the entire program duration.
+fn static_str() -> &'static str {
+    "I live forever"
+}
+
+// ----------- Example 6: Returning a reference to local variable (❌ will not compile) -----------
+
+// fn invalid() -> &String {
+//     let s = String::from("temp");
+//     &s // ❌ error: s doesn't live long enough
+// }
+
+// ----------- Entry point -----------
+
+fn main() {
+    example_1();
+    example_2();
+    println!("{}", static_str());
+    exercise1();
+}
