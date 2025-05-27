@@ -2,9 +2,13 @@
 // 1. Implement `longest_of_three<'a>(a: &'a str, b: &'a str, c: &'a str) -> &'a str`
 //    Use conditional logic to return the longest string among three.
     fn longest_of_three<'a>(a: &'a str, b: &'a str, c:&'a str) -> &'a str {
-        if a.len() > b.len() && a.len() > c.len(){ a }
-        else if b.len() > c.len() && b.len() > a.len() { b }
-        else { c }
+        let mut longest = a;
+        if b.len()>longest.len(){ longest = b}
+        if c.len()>longest.len(){ longest = c}
+        longest
+        // if a.len() > b.len() && a.len() > c.len(){ a }
+        // else if b.len() > c.len() && b.len() > a.len() { b }
+        // else { c }
     }
     fn exercise1(){
         let x = String::from("hi");
@@ -26,25 +30,50 @@ fn exercise2(){
 }
 // 3. Define `struct Label<'a> { text: &'a str }`
 //    Write a function `print_label(label: &Label)` that prints `label.text`.
+#[derive(Debug)]
 struct Label<'a>{
     text: &'a str
 }
-fn print_label(label: &Label){
+fn print_label<'a>(label: &Label<'a>){
     println!("{}",label.text);
 }
 fn exercise3(){
     let la = Label{text: "hello"};
     print_label(&la);
 }
-// 4. Write a function `wrap_in_excerpt<'a>(text: &'a str) -> ImportantExcerpt<'a>`
+// 4. Write a function `wrap_in_excerpt<'a>(text: &'a str) -> Label<'a>`
 //    Return an `ImportantExcerpt` with the input string as the field.
-
+fn wrap_in_excerpt<'a>(text: &'a str) -> Label<'a>{
+    Label{text: text}
+}
+fn exercise4(){
+    let tx = "forth exercise".to_string();
+    println!("{:?}", wrap_in_excerpt(&tx).text);
+}
 // 5. Attempt to return a reference to a local string inside a function
 //    Observe the compiler error: `returns a reference to data owned by the current function`.
-
+// fn not_working<'a>() -> &'a str{
+//     let data = String::from("return this, observe errors");
+//     &data
+// }
+// Its impossible to return a reference of a local data from a function.
+// fn exercise5(){
+//     let a = not_working();
+//     println!("{}",a);
+// }
 // 6. Implement `compare_and_return<'a>(x: &'a str, y: &'a str) -> &'a str`
 //    Include an inner block where one input is declared. Ensure no compile error.
-
+fn compare_and_return<'a>(x: &'a str, y: &'a str) -> &'a str{
+    let res = if x.len()>y.len(){ x } else { y };
+    res
+}
+fn exercise6(){
+    let a = String::from("short_String");
+    {
+        let b = String::from("long_string");
+        println!("{}",compare_and_return(&a, &b));
+    }
+}
 // 7. Write a function `split_and_return<'a>(s: &'a str) -> &'a str`
 //    Return the first sentence from the input string using `.split('.')`.
 
@@ -128,4 +157,8 @@ fn main() {
     exercise1();
     exercise2();
     exercise3();
+    exercise4();
+    // exercise5();
+    exercise6();
+
 }
