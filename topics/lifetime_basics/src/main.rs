@@ -76,10 +76,25 @@ fn exercise6(){
 }
 // 7. Write a function `split_and_return<'a>(s: &'a str) -> &'a str`
 //    Return the first sentence from the input string using `.split('.')`.
-
+fn split_and_return<'a>(s: &'a str) -> &'a str{
+      s.split(".").next().unwrap()
+}
+fn exercise7(){
+    let sentence = String::from("This is me. Hi. How are you?");
+    let res = split_and_return(&sentence);
+    println!("{}",res);
+}
 // 8. Pass a string literal and a `String` reference to `longest`
 //    Observe type compatibility between `&'static str` and `&String`.
+fn somefunction(s: &str, t: &String){
+    println!("{},{}",s,t);
 
+}
+fn exercise8(){
+    let a = "stringLiteral";
+    let b = "String".to_string();
+    somefunction(&a, &b);
+}
 // 9. Build `struct Container<'a> { item: Option<&'a str> }`
 //    Implement a method `get(&self) -> Option<&'a str>`.
 
@@ -160,5 +175,7 @@ fn main() {
     exercise4();
     // exercise5();
     exercise6();
+    exercise7();
+    exercise8();
 
 }
