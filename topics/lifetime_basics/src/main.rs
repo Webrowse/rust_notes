@@ -115,7 +115,14 @@ fn exercise9(){
 }
 // 10. Manually cause a dangling reference by creating a reference in an inner block and returning it
 //     Force a lifetime error. Refactor to fix it using proper scopes.
-
+fn manually<'a>(a: &'a str) -> &'a str{
+     a
+}
+fn exercise10(){
+    let input = String::from("exercise 10 fixed");
+    let error_output = manually(&input);
+    println!("{}",error_output);
+}
 
 // ----------- Example 1: function that returns one of two string references -----------
 
@@ -193,5 +200,6 @@ fn main() {
     exercise7();
     exercise8();
     exercise9();
+    exercise10();
 
 }
