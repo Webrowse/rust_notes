@@ -97,7 +97,22 @@ fn exercise8(){
 }
 // 9. Build `struct Container<'a> { item: Option<&'a str> }`
 //    Implement a method `get(&self) -> Option<&'a str>`.
+struct Container<'a>{
+    item: Option<&'a str>
+}
 
+impl<'a>  Container<'a>{
+    fn get(&self) -> Option<&'a str>{
+        self.item
+    }
+}
+fn exercise9(){
+    let text = String::from("some data");
+    let c = Container { item: Some(&text)};
+    if let Some(val) = c.get(){
+        println!("{}", val);
+    }
+}
 // 10. Manually cause a dangling reference by creating a reference in an inner block and returning it
 //     Force a lifetime error. Refactor to fix it using proper scopes.
 
@@ -177,5 +192,6 @@ fn main() {
     exercise6();
     exercise7();
     exercise8();
+    exercise9();
 
 }
