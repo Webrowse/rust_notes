@@ -168,11 +168,11 @@ fn main2(){
     fn lets_connect<T:SummaryWithAuthor>(inp:T){
         println!("{}",inp.summary());
     }
-    let newPost = NewArticle{
+    let new_post = NewArticle{
         title: "My Article".to_string(),
         author: " ".trim().to_string(),
     };
-    lets_connect(newPost);
+    lets_connect(new_post);
 
 
 }

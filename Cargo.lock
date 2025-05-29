@@ -7,6 +7,14 @@ name = "borrowing"
 version = "0.1.0"
 
 [[package]]
+name = "closures_and_iterators"
+version = "0.1.0"
+
+[[package]]
+name = "code_tesing_playground"
+version = "0.1.0"
+
+[[package]]
 name = "collections_vector_hashmap"
 version = "0.1.0"
 

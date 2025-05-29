@@ -166,7 +166,7 @@ fn example_2() {
 
 // In many cases, Rust can infer lifetimes and you don’t have to write them explicitly.
 
-fn print_str(s: &str) {
+fn _print_str(s: &str) {
     // works fine without specifying lifetimes
     println!("{}", s);
 }
