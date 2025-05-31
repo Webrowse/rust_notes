@@ -1,3 +1,5 @@
+
+
 fn exercises(){
     // 1. Write a closure that takes a `String` and returns its length. Use it on multiple strings.
     let string_size = |s: String|s.len();
@@ -32,18 +34,46 @@ fn exercises(){
     println!("{:?}",new_vec);
     // 6. Create a closure that returns another closure. 
     // The inner closure should multiply by a captured factor.
+    let nested_closure = |x:&str|{
+
+        println!("from nested: {}",x);
+        let inner_closure = ||{
+            println!("from inner: {}",x);
+        };
+        inner_closure();
+    };
+    nested_closure("Yes");
     
     // 7. Define an iterator chain that filters numbers divisible by 3, squares them, 
     // and sums the result.
-
+    let iter_chain = |v:Vec<i32>|{
+        let sum_of_div3:i32 = v.iter().filter(|x|**x % 3 == 0).map(|x|x * x).sum();
+        println!("Sum of all 3 multiples: {}",sum_of_div3);
+    };
+    iter_chain(vec![1,2,3,4,5,6,7,8,9,10,11,12,13]);
     // 8. Implement a function that accepts a vector and a closure, 
     // and returns a new vector of transformed results.
-
+    fn vec_closure(v:Vec<i32>, a:i32) -> Vec<i32>{
+        v.iter().map(|x|x * a).collect()
+    }
+    let clo = |x:i32, y:i32, z:i32| x * y + z;
+    let returned_vector = vec_closure(vec![1,2,3,4,5], clo(2,4,6));
+    println!("{:?}",returned_vector);
     // 9. Build a pipeline using `.iter()`, `.enumerate()`, and `.filter()` 
     // to collect even-indexed elements.
-
+    fn even_vec (v:Vec<i32>) -> Vec<i32>{
+        v.iter().enumerate().filter(|(i,_)|i%2==0).map(|(_,value)|*value).collect()
+    }
+    let vec9 = vec![12,14,21,24];
+    let to_print = even_vec(vec9);
+    println!("exercise9: {:?}",to_print);
     // 10. Write a program that compares memory use between `.iter()` and `.into_iter()` 
     // on large vectors using `.collect()` and `.count()`.
+    let large_vec:Vec<i32> = (0..1_000_000).collect();
+    let iter_collect: Vec<_> = large_vec.iter().map(|x|x * 2).collect();
+    let into_iter_collect: Vec<_> = large_vec.clone().into_iter().map(|x|x* 2).collect();
+    println!("{},{}", iter_collect.len(),size_of_val(&iter_collect));
+    println!("{},{}", into_iter_collect.len(),size_of_val(&into_iter_collect));
 }
 // closures_and_iterators.rs
 

@@ -1,12 +1,13 @@
 fn main() {
-    let s = String::from("hello");
-    let opt_ref: Option<&String> = Some(&s);
-    
-    let opt_cloned: Option<String> = opt_ref.cloned();  // Clones the inner `String`
-
-    println!("{:?}", opt_cloned);
-    println!("{:?}", opt_ref); 
-
-    // Ownership check:
-    println!("{}", s); // Still accessible, not moved
+    fn even_vec(v: Vec<i32>) -> Vec<i32> {
+        v.iter()
+            .enumerate()
+            .filter(|(i, _)| i % 2 == 0)
+            .map(|(_, value)| *value)
+            .collect()
+    }
+    println!(
+        "exercise 9: {:?}",
+        even_vec(vec![1, 54, 23, 56, 44, 13, 22])
+    );
 }
