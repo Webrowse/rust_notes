@@ -1,13 +1,10 @@
+
+
 fn main() {
-    fn even_vec(v: Vec<i32>) -> Vec<i32> {
-        v.iter()
-            .enumerate()
-            .filter(|(i, _)| i % 2 == 0)
-            .map(|(_, value)| *value)
-            .collect()
-    }
-    println!(
-        "exercise 9: {:?}",
-        even_vec(vec![1, 54, 23, 56, 44, 13, 22])
-    );
+    let vecques = vec!["a".to_string(), "adarsh".to_string(), "together".to_string()];
+    let res = filter_and_double_large_words(vecques);
+    println!("{:?}",res);
+}
+fn filter_and_double_large_words(words: Vec<String>) -> Vec<String>{
+    words.into_iter().filter(|x|x.len()>5).map(|x| x.clone()+&x).collect()
 }
