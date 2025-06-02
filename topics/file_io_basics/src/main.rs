@@ -30,18 +30,44 @@ fn exercises(){
         fi2.write_all(b"this is first line\n and the second line\n 3rd line")?;
         Ok(())
     }
-    ex2();
+    // ex2();
     // 3. Append data with `OpenOptions`, verify no overwrite occurs.
     fn ex3()-> io::Result<()>{
         let mut fi3 = OpenOptions::new().append(true).open("exercise2.txt")?;
         fi3.write_all(b"\n appended line")?;
         Ok(())
     }
-    ex3();
+    // ex3();
     // 4. Attempt to append without creating the file first, observe the error.
+    fn ex4()->io::Result<()>{
+        OpenOptions::new().append(true).open("exercise.txt")?.write_all(b"\n hello")?;
+        Ok(())
+    }
+    // ex4();
     // 5. Read file with `read_to_string`, validate full content retrieval.
+    fn ex5()-> io::Result<String>{
+        let mut fi5 = File::open("exercise2.txt")?;
+        let mut cont = String::new();
+        fi5.read_to_string(&mut cont)?;
+        Ok(cont)
+    }
+    let content_of_exercise2 = ex5().unwrap();
+    println!("{:?}",content_of_exercise2);
+
     // 6. Manually truncate file, then read again to confirm zero content.
+    fn ex6()->io::Result<String>{
+        let mut fi6 = File::create("exercise2.txt")?;
+        fi6.write_all(b"overwritten")?;
+        let mut re6 = File::open("exercise2.txt")?;
+        let mut cont6 = String::new();
+        re6.read_to_string(&mut cont6)?;
+        Ok(cont6)
+    }
+    let content6 = ex6().unwrap();
+    println!("{:?}",content6);
+
     // 7. Use `fs::read_to_string` for a one-liner read, compare output with manual method.
+    
     // 8. Check file permission error by making file read-only before writing.
     // 9. Combine write, append, and read in sequence, inspect file state after each.
     // 10. Simulate a read failure by providing an invalid path, handle the error manually.
