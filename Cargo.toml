@@ -1,2 +1,2 @@
 [workspace]
-members = [ "file_io_basics", "topics/*"]
+members = ["topics/*"]
