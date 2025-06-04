@@ -26,7 +26,7 @@ fn exercises(){
 
     // 2. Write multiple lines with `write_all`, then inspect newline handling.
     fn ex2() -> io::Result<()>{
-        let mut fi2 = File::create("exercise2.txt")?;
+        let mut fi2 = File::create("exercise9.txt")?;
         fi2.write_all(b"this is first line\n and the second line\n 3rd line")?;
         Ok(())
     }
@@ -51,8 +51,8 @@ fn exercises(){
         fi5.read_to_string(&mut cont)?;
         Ok(cont)
     }
-    let content_of_exercise2 = ex5().unwrap();
-    println!("{:?}",content_of_exercise2);
+    // let content_of_exercise2 = ex5().unwrap();
+    // println!("{:?}",content_of_exercise2);
 
     // 6. Manually truncate file, then read again to confirm zero content.
     fn ex6()->io::Result<String>{
@@ -63,15 +63,42 @@ fn exercises(){
         re6.read_to_string(&mut cont6)?;
         Ok(cont6)
     }
-    let content6 = ex6().unwrap();
-    println!("{:?}",content6);
+    // let content6 = ex6().unwrap();
+    // println!("{:?}",content6);
 
     // 7. Use `fs::read_to_string` for a one-liner read, compare output with manual method.
-    
+    fn ex7()-> io::Result<String>{
+        fs::read_to_string("exercise2.txt")
+    }
+    // ex7();
     // 8. Check file permission error by making file read-only before writing.
-    // 9. Combine write, append, and read in sequence, inspect file state after each.
-    // 10. Simulate a read failure by providing an invalid path, handle the error manually.
-    
+    fn ex8() -> io::Result<()>{
+        // let fi8 = File::create("exercise8.txt")?;
+        // fi8.write_all(b"without writing permission")?;
+//         fi8.write_all(b"without writing permission")?;
+//    |       ^^^ cannot borrow as mutable
+//    |
+        Ok(())
+    }
+    // ex8();
+    // 9. Combine write, append, and read in sequence, 
+    //inspect file state after each.
+    fn ex9() -> io::Result<()>{
+        let mut fi9 = File::create("exercise9.txt")?;
+        fi9.write_all(b"ex9 text \n append after this")?;
+        let mut fi9 = OpenOptions::new().append(true).open("exercise9.txt")?;
+        fi9.write(b"\n This is a append from ex9")?;
+        fs::read_to_string("exercise9.txt")?;
+        Ok(())
+    }
+    // ex9();
+    // 10. Simulate a read failure by providing an invalid path, 
+    // handle the error manually.
+    fn ex10() -> io::Result<String>{
+        fs::read_to_string("exercise00.txt")
+        
+    }
+    println!("{:?}",ex10());
 }
 fn write_to_file() -> io::Result<()> {
     let mut file = File::create("output.txt")?; // Creates or overwrites

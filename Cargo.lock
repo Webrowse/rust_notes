@@ -19,6 +19,10 @@ name = "collections_vector_hashmap"
 version = "0.1.0"
 
 [[package]]
+name = "command_line_args"
+version = "0.1.0"
+
+[[package]]
 name = "control-flow"
 version = "0.1.0"
 
