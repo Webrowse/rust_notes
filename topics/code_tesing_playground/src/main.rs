@@ -1,11 +1,8 @@
 
 
-
 fn main() {
-    let a = Some(5);
-    if let Some(ref x) = a {
-        println!("{}", x);
+    let s = String::from("hello");
+    match s {
+        ref val => println!("{}", val),
     }
-    println!("{:?}", a);
 }
-
