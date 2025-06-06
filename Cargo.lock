@@ -87,6 +87,10 @@ name = "traits_and_generics"
 version = "0.1.0"
 
 [[package]]
+name = "unit_test_basic"
+version = "0.1.0"
+
+[[package]]
 name = "variable"
 version = "0.1.0"
 
