@@ -9,6 +9,9 @@ fn add(a: i32, b: i32) -> i32 {
 pub fn is_even(n: i32) -> bool {  //made public for ex7
     n % 2 == 0
 }
+fn main(){
+    println!("{}",add(3,2));
+}
 
 //  Tests go in a special `#[cfg(test)]` module
 #[cfg(test)]
@@ -54,7 +57,6 @@ mod ex1{
         assert_eq!(add(0,0),0);
     }
 }
-fn main(){}
 // 2. Write a test for `add(i32::MAX, 1)` and check for overflow behavior.
 #[cfg(test)]
 mod ex2{
@@ -82,7 +84,7 @@ mod ex3{
 mod ex4{
     use super::add;
     #[test]
-    fn testing_add_negetive_values(){
+    fn testing_add_negative_values(){
         assert_eq!(add(8, -5),3);
 
     }
@@ -132,7 +134,7 @@ mod helper{
 }
 // 9. Add `#[ignore]` to a test and verify it's skipped by default in `cargo test`.
 #[cfg(test)]
-mod ignoing{
+mod ignoring{
     use super::add;
     #[test]
     #[ignore]
