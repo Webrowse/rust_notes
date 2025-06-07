@@ -116,7 +116,36 @@ mod ex7{
     }
 }
 // 8. Write a helper function that asserts a range of numbers are even or odd, and test them in a loop.
-
+#[cfg(test)]
+mod helper{
+    use super::is_even;
+    #[test]
+    fn range_of_numbers(){
+        let mut even: Vec<i32> = Vec::new();
+        for i in 1..5{
+            if is_even(i){
+                even.push(i);
+            }
+        }
+        assert_eq!(vec![2,4],even);
+    }
+}
 // 9. Add `#[ignore]` to a test and verify it's skipped by default in `cargo test`.
-
+#[cfg(test)]
+mod ignoing{
+    use super::add;
+    #[test]
+    #[ignore]
+    fn test_ignore(){
+        assert_eq!(add(34,4),6)
+    }
+}
 // 10. Use `assert_ne!` instead of `assert_eq!` in one test and verify opposite logic.
+#[cfg(test)]
+mod ex10{
+    use super::add;
+    #[test]
+    fn test_assert_nq(){
+        assert_ne!(add(2,3),4);
+    }
+}
