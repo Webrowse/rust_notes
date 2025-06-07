@@ -1,16 +1,16 @@
 // basic_unit_testing.rs
 
-// 🔹 Regular function to test
+//  Regular function to test
 fn add(a: i32, b: i32) -> i32 {
     a + b
 }
 
-// 🔹 Private logic for test coverage
+//  Private logic for test coverage
 fn is_even(n: i32) -> bool {
     n % 2 == 0
 }
 
-// 🔹 Tests go in a special `#[cfg(test)]` module
+//  Tests go in a special `#[cfg(test)]` module
 #[cfg(test)]
 mod tests {
     // Import names from outer scope
@@ -46,9 +46,26 @@ mod tests {
 // tests
 
 // 1. Write a test for `add(0, 0)` and verify the result.
-
+#[cfg(test)]
+mod ex1{
+    use super::*;
+    #[test]
+    fn test_add(){
+        assert_eq!(add(0,0),0);
+    }
+}
 // 2. Write a test for `add(i32::MAX, 1)` and check for overflow behavior.
+#[cfg(test)]
+mod ex2{
+    use std::i32;
 
+    use super::add;
+    #[test]
+    #[should_panic]
+    fn test_add(){
+        assert_eq!(add(i32::MAX,1),23);
+    }
+}
 // 3. Refactor `is_even` to handle negative values and test `is_even(-4)` and `is_even(-3)`.
 
 // 4. Add a test for `add(a, b)` where `a` is positive and `b` is negative, verify correctness.
