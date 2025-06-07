@@ -6,7 +6,7 @@ fn add(a: i32, b: i32) -> i32 {
 }
 
 //  Private logic for test coverage
-fn is_even(n: i32) -> bool {
+pub fn is_even(n: i32) -> bool {  //made public for ex7
     n % 2 == 0
 }
 
@@ -54,6 +54,7 @@ mod ex1{
         assert_eq!(add(0,0),0);
     }
 }
+fn main(){}
 // 2. Write a test for `add(i32::MAX, 1)` and check for overflow behavior.
 #[cfg(test)]
 mod ex2{
@@ -67,15 +68,53 @@ mod ex2{
     }
 }
 // 3. Refactor `is_even` to handle negative values and test `is_even(-4)` and `is_even(-3)`.
+#[cfg(test)]
+mod ex3{
+    use super::is_even;
+    #[test]
+    fn test_negetive_value_in_is_even(){
+        assert_eq!(is_even(-4), true);
+    }
 
+}
 // 4. Add a test for `add(a, b)` where `a` is positive and `b` is negative, verify correctness.
+#[cfg(test)]
+mod ex4{
+    use super::add;
+    #[test]
+    fn testing_add_negetive_values(){
+        assert_eq!(add(8, -5),3);
 
+    }
+}
 // 5. Test `add(100, -100)` and verify it returns `0`.
-
+#[cfg(test)]
+mod ex5{
+    use super::add;
+    #[test]
+    fn test_add_for_100(){
+        assert_eq!(add(100,-100),0);
+    }
+}
 // 6. Remove `#[should_panic]` from `test_failure` and observe test failure behavior.
-
+#[cfg(test)]
+mod ex6{
+    use super::add;
+    #[test]
+    fn intent_panic(){
+        assert_eq!(add(10,12),31);
+    }
+}
 // 7. Move `is_even` to a public function and test it from an external module.
+#[cfg(test)]
+mod ex7{
+    use crate::is_even;
 
+    #[test]
+    fn access_from_pub_fun(){
+        assert_eq!(is_even(2),true);
+    }
+}
 // 8. Write a helper function that asserts a range of numbers are even or odd, and test them in a loop.
 
 // 9. Add `#[ignore]` to a test and verify it's skipped by default in `cargo test`.
