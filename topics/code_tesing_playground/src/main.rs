@@ -1,10 +1,6 @@
-use std::{thread, time::Duration};
+// Exercise 2: Field Renaming and Validation
+// Make a struct Person with #[serde(rename = "firstName")] name: String.
+//     Serialize an instance.
+//     Manually write JSON with incorrect key (e.g., name instead of firstName).
+//     Attempt deserialization. Catch and print the error.
 
-
-fn main(){
-    let handle = thread::spawn(|| {
-        thread::sleep(Duration::from_millis(1000));
-        println!("Done from thread.");
-    });
-
-}
