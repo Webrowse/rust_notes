@@ -289,3 +289,67 @@ fn main() {
 //         Mode::Locked => println!("Mode is Locked Data is read-only"),
 //     }
 // }
+
+// Exercise 5: Flatten Composition
+
+// use serde::{Deserialize, Serialize};
+// use serde_json;
+
+// #[derive(Serialize, Deserialize, Debug)]
+// struct Inner{
+//     a: i32,
+//     b: i32,
+// }
+
+// #[derive(Serialize, Deserialize, Debug)]
+// struct Outer{
+//     id: u32,
+//     #[serde(flatten)]
+//     data: Inner,
+// }
+
+// fn main(){
+//     let flatten_serde = Outer{
+//         id: 42,
+//         data: Inner { a: 69, b: 420 }
+//     };
+//     let serial_flat = serde_json::to_string_pretty(&flatten_serde).unwrap();
+//     println!("{}", serial_flat);
+
+//     let deserial_flat: Outer = serde_json::from_str(&serial_flat).unwrap();
+//     match deserial_flat{
+//         n if n.id>50 => println!("id is greater than 50: {}",n.id),
+//         n if n.id<50 => println!("id is less than 50: {}",n.id),
+//         _ => println!("No clue"),
+//     }
+// }
+
+// Exercise 6: Strict Input Enforcement
+// Deserialize StrictInput { name: String } with #[serde(deny_unknown_fields)] 
+// from JSON including extra field.
+//     Print the error clearly.
+//     Remove extra field. Deserialize successfully.
+
+// use serde::{Deserialize,Serialize};
+// use serde_json;
+
+
+// #[derive(Serialize, Deserialize, Debug)]
+// #[serde(deny_unknown_fields)]
+// struct StrictInput{
+//     name: String,
+// }
+
+// fn main(){
+//     let deny_unknown = r#"{"name": "Darsh", "age":19}"#;
+//     match serde_json::from_str::<StrictInput>(deny_unknown){
+//         Ok(allow) => println!("{:?}", allow),
+//         Err(e) => eprintln!("Error, due to more field than expected: {}",e),
+//     }
+//     let allow_known = r#"{"name": "Darsh"}"#;
+//     match serde_json::from_str::<StrictInput>(allow_known){
+//         Ok(allow) => println!("{:?}", allow),
+//         Err(e) => eprintln!("Error, due to more field than expected: {}",e),
+//     }
+// }
+
