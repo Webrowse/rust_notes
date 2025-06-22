@@ -353,3 +353,56 @@ fn main() {
 //     }
 // }
 
+// Exercise 7: Default Injection
+// Create a struct with:
+//      #[serde(default)] verbose: bool,  
+//      #[serde(default = "default_port")] port: u16  
+
+//  Provide minimal JSON (missing fields).
+//  Confirm defaults fill missing data.
+// 
+
+// Exercise 8: Tagged Enum Dispatcher
+// Deserialize command pattern:
+//  {"type": "Move", "x": 1, "y": 2}
+//  {"type": "Stop"}
+// From:
+//  enum Command { Move { x: i32, y: i32 }, Stop }
+// Deserialize and pattern match.
+
+
+// use serde::Deserialize;
+// use serde_json;
+
+// #[derive(Debug, Deserialize)]
+// #[serde(tag = "type")]
+// enum Command{
+//     Move{
+//         x: i32,
+//         y: i32,
+//     },
+//     Stop,
+// }
+//  fn process_print(json_str: &str){
+//     match serde_json::from_str::<Command>(json_str){
+//         Ok(cmd) => {
+//             match cmd{
+//                 Command::Move { x, y } => {
+//                     println!("Move Command: Moving to {},{}", x, y);
+//                 }
+//                 Command::Stop => {
+//                     println!("Stop Command, do not move");
+//                 }
+//             }
+//         },
+//         Err(e) => eprintln!("Error deserialising: {}",e),
+//     }
+//  }
+
+// fn main(){
+//     let enum_data = r#"{"type": "Move", "x": 1, "y": 2}"#;
+//     process_print(enum_data);
+
+//     let enum_data2 = r#"{"type": "Stop"}"#;
+//     process_print(enum_data2);
+// }
