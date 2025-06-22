@@ -1,5 +1,5 @@
 // Run: cargo add serde serde_json --features derive
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use serde_json;
 use std::collections::HashMap;
 
@@ -62,7 +62,9 @@ struct Defaults {
     retries: usize,
 }
 
-fn default_threads() -> usize { 4 }
+fn default_threads() -> usize {
+    4
+}
 
 #[derive(Serialize, Debug)]
 struct Meta {
@@ -86,7 +88,11 @@ enum Command {
 
 fn main() {
     // 1. Basic Struct Serialize
-    let user = User { id: 1, username: "adarsh".to_string(), active: true };
+    let user = User {
+        id: 1,
+        username: "adarsh".to_string(),
+        active: true,
+    };
     let json = serde_json::to_string(&user).unwrap();
     println!("\n1. Serialize User: {}", json);
 
@@ -101,8 +107,14 @@ fn main() {
     println!("3. Optional field: {:?}", config);
 
     // 4. Renamed Fields
-    let renamed = RenamedFields { id: 10, username: "foo".into() };
-    println!("4. Renamed field: {}", serde_json::to_string(&renamed).unwrap());
+    let renamed = RenamedFields {
+        id: 10,
+        username: "foo".into(),
+    };
+    println!(
+        "4. Renamed field: {}",
+        serde_json::to_string(&renamed).unwrap()
+    );
 
     // 5. Skip Fields
     let skip = SkipExample {
@@ -130,7 +142,10 @@ fn main() {
             timestamp: 123456,
         },
     };
-    println!("8. Flatten: {}", serde_json::to_string_pretty(&doc).unwrap());
+    println!(
+        "8. Flatten: {}",
+        serde_json::to_string_pretty(&doc).unwrap()
+    );
 
     // 9. Deny Unknown Fields
     let good = r#"{"version": "1.0"}"#;
@@ -147,7 +162,6 @@ fn main() {
     let cmd: Command = serde_json::from_str(add_cmd).unwrap();
     println!("11. Tagged Enum: {:?}", cmd);
 }
-
 
 // exercises
 
@@ -174,7 +188,7 @@ fn main() {
 //     };
 //     let json = serde_json::to_string(&book).unwrap();
 //     println!("\nSerialized: {}", json);
-    
+
 //     let json_de: Book = serde_json::from_str(&json).unwrap();
 //     println!("\nDESerialized: {:?}", json_de);
 //     println!("equating book and deserialized: {:?}",assert_eq!(book,json_de));
@@ -185,7 +199,6 @@ fn main() {
 //     Serialize an instance.
 //     Manually write JSON with incorrect key (e.g., name instead of firstName).
 //     Attempt deserialization. Catch and print the error.
-
 
 // #[derive(Serialize, Deserialize, Debug)]
 // struct Renaming{
@@ -212,7 +225,7 @@ fn main() {
 // }
 
 // Exercise 3: Conditional Serialization
-// Create a struct LoginAttempt with user: String, token: Option<String>, 
+// Create a struct LoginAttempt with user: String, token: Option<String>,
 // #[serde(skip_serializing)] password: String.
 //     Serialize with token = None.
 //     Confirm which fields are present in JSON.
@@ -267,14 +280,14 @@ fn main() {
 //     let json_locked = r#"{"name":"readonly enum", "mode": "readonly"}"#;
 //     let json_write = r#"{"name":"write enum", "mode": "Write"}"#;
 //     let json_read = r#"{"name":"read enum", "mode": "Read"}"#;
-    
+
 //     let read_mode: WithEnumMode = serde_json::from_str(json_read)
 //         .expect("deserialize error in read mode");
 //     let write_mode: WithEnumMode = serde_json::from_str(json_write)
 //     .expect("Deserialize error in write mode");
 //     let locked_mode: WithEnumMode = serde_json::from_str(json_locked)
 //     .expect("Deserialize error in locked/readonly mode");
-    
+
 //     print_mode(&read_mode.mode, "read Mode");
 //     print_mode(&write_mode.mode, "write Mode");
 //     print_mode(&locked_mode.mode, "Locked Mode");
@@ -325,14 +338,13 @@ fn main() {
 // }
 
 // Exercise 6: Strict Input Enforcement
-// Deserialize StrictInput { name: String } with #[serde(deny_unknown_fields)] 
+// Deserialize StrictInput { name: String } with #[serde(deny_unknown_fields)]
 // from JSON including extra field.
 //     Print the error clearly.
 //     Remove extra field. Deserialize successfully.
 
 // use serde::{Deserialize,Serialize};
 // use serde_json;
-
 
 // #[derive(Serialize, Deserialize, Debug)]
 // #[serde(deny_unknown_fields)]
@@ -355,12 +367,31 @@ fn main() {
 
 // Exercise 7: Default Injection
 // Create a struct with:
-//      #[serde(default)] verbose: bool,  
-//      #[serde(default = "default_port")] port: u16  
+//      #[serde(default)] verbose: bool,
+//      #[serde(default = "default_port")] port: u16
 
 //  Provide minimal JSON (missing fields).
 //  Confirm defaults fill missing data.
-// 
+//
+// use serde::Deserialize;
+// use serde_json;
+
+// #[derive(Debug, Deserialize)]
+// struct DefaultSerde {
+//     #[serde(default)]
+//     verbose: bool,
+
+//     #[serde(default = "default_port")]
+//     port: u16,
+// }
+
+// fn default_port() -> u16 { 3 }
+
+// fn main() {
+//     let default_data = r#"{}"#;
+//     let deserialed: DefaultSerde = serde_json::from_str(default_data).unwrap();
+//     println!("{:?}", deserialed);
+// }
 
 // Exercise 8: Tagged Enum Dispatcher
 // Deserialize command pattern:
@@ -369,7 +400,6 @@ fn main() {
 // From:
 //  enum Command { Move { x: i32, y: i32 }, Stop }
 // Deserialize and pattern match.
-
 
 // use serde::Deserialize;
 // use serde_json;
@@ -405,4 +435,71 @@ fn main() {
 
 //     let enum_data2 = r#"{"type": "Stop"}"#;
 //     process_print(enum_data2);
+// }
+
+// Exercise 9: Deserialize Arbitrary Map
+// From JSON: {"x": 10, "y": 20}
+//     Deserialize to HashMap<String, i32>
+//     Iterate and print key-values
+//     Re-serialize back to JSON
+
+// use std::collections::HashMap;
+// use serde_json;
+
+// fn main(){
+//     let raw_hashmap = r#"{"x": 10, "y": 20}"#;
+//     let hashed: HashMap<String, i32> = serde_json::from_str(raw_hashmap).unwrap();
+//     println!("{:?}", hashed);
+
+//     for (i, j) in hashed.iter(){
+//         println!("Key: {:?}, Value: {:?}",i, j);
+//     }
+
+//     let serialise_json = serde_json::to_string(&hashed).unwrap();
+//     println!("{}", serialise_json);
+// }
+
+// Exercise 10: Error Handling Practice
+// Wrap all deserialization attempts in a match or Result.
+//     Print errors without crashing
+//     Try invalid JSON strings: missing fields, extra fields, wrong types.
+
+// use serde::{Deserialize, Serialize};
+// use serde_json;
+
+// #[derive(Debug, Deserialize, Serialize)]
+// #[serde(deny_unknown_fields)]
+// struct Testing{
+//     name: String,
+//     age: u32,
+// }
+
+// fn deserial_error_free(json_str: &str){
+//     match serde_json::from_str::<Testing>(json_str){
+//         Ok(res) => {
+//             println!("{:?}", res);
+//         },
+//         Err(e) => {
+//             eprintln!("The error while Deserialisation: {}",e);
+//         }
+//     }
+// }
+// fn main(){
+//     let sample1 = Testing{ name: "Romy".into(), age: 19};
+//     let test1  = serde_json::to_string(&sample1).unwrap();
+//     println!("{}",test1);
+//     println!("Test 1: ");
+//     deserial_error_free(test1.as_str());
+
+//     println!("Test 2: ");
+//     let test2 = r#"{"name": "romy"}"#;
+//     deserial_error_free(test2);
+
+//     println!("Test 3: ");
+//     let test3 = r#"{"name": "romy", "age": 19, "email": "a@we.com"}"#;
+//     deserial_error_free(test3);
+
+//     println!("Test 4: ");
+//     let test4 = r#"{"name": "romy", "age": true,}"#;
+//     deserial_error_free(test4);
 // }
