@@ -22,5 +22,9 @@ fn main(){
 
     if let Some(files_iter) = matches.get_many::<String>("files"){
         let files: Vec<&String> = files_iter.collect();
+        println!("Captured file (count {}) : {:#?}", files.len(), files);
+    }
+    else{
+        println!("No files captured");
     }
 }
