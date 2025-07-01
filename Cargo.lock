@@ -110,11 +110,6 @@ version = "0.1.0"
 [[package]]
 name = "code_tesing_playground"
 version = "0.1.0"
-dependencies = [
- "clap",
- "serde",
- "serde_json",
-]
 
 [[package]]
 name = "collections_vector_hashmap"
@@ -292,6 +287,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "solana-rust-cli"
+version = "0.1.0"
 
 [[package]]
 name = "string_methods"

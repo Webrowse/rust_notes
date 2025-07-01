@@ -1,30 +1,58 @@
-// 3. Positional Variadic Argument
-// Run:
-// cargo run -- file1.txt file2.txt  
+fn main() {
+    // In general, the `{}` will be automatically replaced with any
+    // arguments. These will be stringified.
+    println!("{} days", 31);
 
-// Confirm files captured.
-// Then run with zero files. 
-// Confirm it doesn’t panic. 
-// Change num_args(1..) to 1..=3. Test limits.
+    // Without a suffix, 31 becomes an i32. You can change what type 31 is
+    // by providing a suffix. The number 31i64 for example has the type i64.
 
-use clap::{Arg, Command};
+    // There are various optional patterns this works with. Positional
+    // arguments can be used.
+    println!("{0}, this is {1}. {1}, this is {0}", "Alice", "Bob");
 
-fn main(){
-    let matches = Command::new("cli-tool")
-        .version("1.0")
-        .author("Adarsh")
-        .arg(
-            Arg::new("files")
-                .help("list of files to process")
-                .num_args(1..)
-                .value_parser(clap::value_parser!(String))   
-        ).get_matches();
+    // As can named arguments.
+    println!("{subject} {verb} {object}",
+        object="the lazy dog",
+        subject="the quick brown fox",
+        verb="jumps over"
+    );
 
-    if let Some(files_iter) = matches.get_many::<String>("files"){
-        let files: Vec<&String> = files_iter.collect();
-        println!("Captured file (count {}) : {:#?}", files.len(), files);
+    // Special formatting can be specified after a `:`.
+    println!("{} of {:b} people know binary, the other half doesn't", 1, 4);
+
+    // You can right-align text with a specified width. This will output
+    // "     1". 5 white spaces and a "1".   
+    println!("{number:>width$}", number=1, width=6);
+
+    // You can pad numbers with extra zeroes. This will output "000001".
+    println!("{number:0>width$}", number=1, width=6);
+    
+    // Rust even checks to make sure the correct number of arguments are
+    // used.
+    println!("My name is {0}, {1} {0}", "Binh", "Binh");
+    
+    
+    // Create a structure named `Structure` which contains an `i32`.
+    #[derive(Debug)]
+    struct Person {
+        x: i32,
+        y: i32
     }
-    else{
-        println!("No files captured");
-    }
+
+    let x = 10;
+    let y = 1;
+    let data = Person {x, y};
+    println!("{:#?}", data);
+    
+    println!("***********Testing**********");
+    println!("{:10.*}", 2, 12133442.123);
+    println!("{:10.*}", 2, 142.123);
+    println!("{:10.*}", 2, 1.123);
+
+    println!("**********End***********");
+
+    // Hello {next arg ("x")} is {arg 2 (0.01) with precision
+    //                          specified in its predecessor (5)}
+    println!("Hello {0} is {2:.1$}",   "x", 4, 0.013789375);
+    
 }
