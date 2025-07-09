@@ -1,2 +1,4 @@
 [workspace]
-members = [ "topics/*"]
+members = ["topics/*"]
+resolver = "3"
+
