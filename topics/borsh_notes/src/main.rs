@@ -1,6 +1,7 @@
 use borsh::{BorshDeserialize, BorshSerialize};
-use std::io::{Result};
+use std::io::Result;
 
+mod exercises;
 /// 1. Basic Struct Serialization and Deserialization
 
 #[derive(BorshSerialize, BorshDeserialize, Debug, PartialEq)]
@@ -95,11 +96,14 @@ fn simulate_solana_vault() -> Result<()> {
 /// - No versioning: handle migrations yourself.
 
 fn main() -> Result<()> {
-    println!("Running Borsh examples...");
+    // println!("Running Borsh examples...");
 
-    basic_borsh_example()?;
-    simulate_solana_account_parsing()?;
-    simulate_solana_vault()?;
+    // basic_borsh_example()?;
+    // simulate_solana_account_parsing()?;
+    // simulate_solana_vault()?;
 
     Ok(())
 }
+
+
+//Exercises
