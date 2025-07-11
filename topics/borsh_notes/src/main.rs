@@ -11,7 +11,7 @@ struct User {
     active: bool,
 }
 
-fn basic_borsh_example() -> Result<()> {
+fn _basic_borsh_example() -> Result<()> {
     let user = User {
         id: 1,
         username: "romy_solana".to_string(),
@@ -47,7 +47,7 @@ struct Profile {
 
 /// 4. Manual Byte Parsing (Simulating Solana Account Data)
 
-fn simulate_solana_account_parsing() -> Result<()> {
+fn _simulate_solana_account_parsing() -> Result<()> {
     // Imagine this is account data from Solana runtime
     let account_data = Profile {
         user: User {
@@ -77,7 +77,7 @@ pub struct VaultState {
     pub is_active: bool,    // flag
 }
 
-fn simulate_solana_vault() -> Result<()> {
+fn _simulate_solana_vault() -> Result<()> {
     let vault = VaultState {
         owner: [0u8; 32],
         total_deposit: 1_000_000,
@@ -101,7 +101,8 @@ fn main() -> Result<()> {
     // basic_borsh_example()?;
     // simulate_solana_account_parsing()?;
     // simulate_solana_vault()?;
-
+    let _ = exercises::ex1();
+    let _ = exercises::ex2();
     Ok(())
 }
 
