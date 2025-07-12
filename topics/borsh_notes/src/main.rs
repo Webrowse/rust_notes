@@ -103,6 +103,8 @@ fn main() -> Result<()> {
     // simulate_solana_vault()?;
     let _ = exercises::ex1();
     let _ = exercises::ex2();
+    let _ = exercises::ex3();
+    let _ = exercises::ex4();
     Ok(())
 }
 
