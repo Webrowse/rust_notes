@@ -105,6 +105,10 @@ fn main() -> Result<()> {
     let _ = exercises::ex2();
     let _ = exercises::ex3();
     let _ = exercises::ex4();
+    let _ = exercises::ex5();
+    let _ = exercises::ex6();
+    let _ = exercises::ex7();
+    let _ = exercises::ex8();
     Ok(())
 }
 
