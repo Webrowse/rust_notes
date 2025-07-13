@@ -109,6 +109,11 @@ fn main() -> Result<()> {
     let _ = exercises::ex6();
     let _ = exercises::ex7();
     let _ = exercises::ex8();
+    let _ = exercises::ex9();
+    let init = User {id: 01, username: "rom".to_string(),active:true};
+    let bserial = init.try_to_vec()?;
+    let ex10 = exercises::ex10(&bserial)?;
+    println!("{:?}", ex10);
     Ok(())
 }
 

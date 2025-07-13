@@ -1,16 +1,18 @@
 //Exercises:
 
 use borsh::{BorshDeserialize, BorshSerialize};
+use serde::{Deserialize, Serialize};
+use serde_json;
 use std::io::Result;
 
 // 1. Serialize and deserialize the User struct, compare with original.
-#[derive(BorshDeserialize, BorshSerialize, Debug)]
+#[derive(BorshDeserialize, BorshSerialize, Serialize, Deserialize, Debug)]
 pub struct BorshBasic {
     name: String,
     age: u8,
 }
 #[derive(BorshDeserialize, BorshSerialize, Debug, PartialEq)]
-struct User {
+pub struct User {
     id: u8,
     username: String,
     is_active: bool,
@@ -128,19 +130,30 @@ pub fn ex4() -> Result<()> {
     Ok(())
 }
 // 5. Mutate one field in Profile, serialize, deserialize, confirm only the intended field changed.
-pub fn ex5()-> Result<()>{
-    let profile = Profile{
-        user: User{
+pub fn ex5() -> Result<()> {
+    let profile = Profile {
+        user: User {
             id: 2,
             username: "adarsh".to_string(),
             is_active: true,
         },
         nickname: Some("adarsh".to_string()),
     };
+    let profile2 = Profile {
+        user: User {
+            id: 2,
+            username: "adarsh".to_string(),
+            is_active: true,
+        },
+        nickname: Some("romy".to_string()),
+    };
     let ser = profile.try_to_vec()?;
     let des = Profile::try_from_slice(&ser)?;
+    let ser2 = profile2.try_to_vec()?;
+    let des2 = Profile::try_from_slice(&ser2)?;
 
-    assert_eq!(profile, des);
+    assert_eq!(des.user, des2.user);
+    assert_ne!(des.nickname, des2.nickname);
     println!("Exercise 5 passed");
 
     Ok(())
@@ -149,38 +162,42 @@ pub fn ex5()-> Result<()>{
 // 6. Corrupt serialized VaultState by removing bytes, attempt deserialization, observe error.
 #[derive(Debug, PartialEq, BorshDeserialize, BorshSerialize)]
 pub struct VaultState {
-    pub owner: [u8; 32],    
-    pub total_deposit: u64, 
-    pub is_active: bool,    
+    pub owner: [u8; 32],
+    pub total_deposit: u64,
+    pub is_active: bool,
 }
 
-pub fn ex6()-> Result<()>{
-    let vstate = VaultState{owner: [4; 32], total_deposit: 3, is_active: true,};
+pub fn ex6() -> Result<()> {
+    let vstate = VaultState {
+        owner: [4; 32],
+        total_deposit: 3,
+        is_active: true,
+    };
     let mut ser = vstate.try_to_vec()?;
-    
+
     ser.pop();
     let des = VaultState::try_from_slice(&ser);
-    match des{
-        Ok(n) => println!("{:?}",n),
-        Err(e) => eprintln!("Error in exercise 6:\n{:?}",e), 
+    match des {
+        Ok(n) => println!("{:?}", n),
+        Err(e) => eprintln!("Error in exercise 6:\n{:?}", e),
         //Custom { kind: InvalidInput, error: "Unexpected length of input" }
     }
     println!("Exercise 6 passed");
     Ok(())
 }
 // 7. Manually parse partial byte slice of Profile, confirm failure, understand boundary sensitivity.
-pub fn ex7() -> Result<()>{
-    let inst = BorshBasic{
+pub fn ex7() -> Result<()> {
+    let inst = BorshBasic {
         name: "Hello".to_string(),
-        age: 23
+        age: 23,
     };
     let ser = inst.try_to_vec()?;
     let ser_slice = ser[3..10].to_vec();
     let des = BorshBasic::try_from_slice(&ser_slice);
 
     match des {
-        Ok(n) => println!("{:?}",n),
-        Err(e) => eprintln!("Error in Ex 7:\n{:?}",e),
+        Ok(n) => println!("{:?}", n),
+        Err(e) => eprintln!("Error in Ex 7:\n{:?}", e),
     }
     println!("Exercise 7 passed");
     Ok(())
@@ -188,26 +205,55 @@ pub fn ex7() -> Result<()>{
 // 8. Extend VaultState with a new field, serialize with new, deserialize with old, observe failure.
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub struct VaultStateNew {
-    pub owner: [u8; 32],    
-    pub total_deposit: u64, 
-    pub is_active: bool, 
+    pub owner: [u8; 32],
+    pub total_deposit: u64,
+    pub is_active: bool,
     pub exec: bool,
 }
 
-pub fn ex8()-> Result<()>{
-    let vsn = VaultStateNew{
-        owner: [2; 32], total_deposit: 2, is_active: true, exec: false,
+pub fn ex8() -> Result<()> {
+    let vsn = VaultStateNew {
+        owner: [2; 32],
+        total_deposit: 2,
+        is_active: true,
+        exec: false,
     };
     let ser = vsn.try_to_vec()?;
     let des = VaultState::try_from_slice(&ser);
 
     match des {
-        Ok(n) => println!("{:?}",n),
-        Err(e) => eprintln!("Error in exercise 8:\n{:?}",e),
+        Ok(n) => println!("{:?}", n),
+        Err(e) => eprintln!("Error in exercise 8:\n{:?}", e),
     }
     println!("Exercise 8 passed");
     Ok(())
 }
 // 9. Serialize using Borsh, deserialize using Serde (or vice versa), confirm incompatibility.
+pub fn ex9() -> std::io::Result<()> {
+    let inst = BorshBasic {
+        name: "abc".to_string(),
+        age: 90,
+    };
+    let borser = inst.try_to_vec()?;
+    match String::from_utf8(borser.clone()){
+        Ok(json) => {
+            let res: std::result::Result<BorshBasic,serde_json::Error> = serde_json::from_str(&json);
+            match res{
+                Ok(obj) => {println!("No hapenning: {:?}", obj);},
+                Err(e) => {println!("expected error: {:?}",e);},
+            }
+        }
+        Err(e) => {
+            eprintln!("no convert borsh to UTF-8: {}",e);
+        }
+    }
 
+    println!("Exercise 9 passed");
+    Ok(())
+}
 // 10. Write a function taking [u8] as input, returning a User, usable in Solana processor logic.
+
+pub fn ex10(data: &[u8]) -> Result<User> {
+    let bdes = User::try_from_slice(data);
+    bdes
+}
