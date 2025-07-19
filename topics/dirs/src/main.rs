@@ -1,9 +1,7 @@
-// 🦍 BEAST MODE: dirs crate - ONLY what matters. No fluff. Use or forget.
-
-// Cargo.toml:
-// dirs = "5.0"
-
 use dirs::*;
+
+pub mod exercise;
+use crate::exercise::testing;
 
 fn main() {
     // Home dir — base of all user stuff
@@ -23,15 +21,18 @@ fn main() {
 
     // Desktop dir — user desktop (optional)
     println!("DESKTOP     => {:?}", desktop_dir().unwrap_or_default());
+
 }
 
-// ⚔️ USE CASES:
+// USE CASES:
 // home_dir()     => fallback or user paths
 // config_dir()   => ~/.config/my_app/config.json
 // data_dir()     => ~/.local/share/my_app/data.db
 // cache_dir()    => ~/.cache/my_app/temp.json
 
-// 💡 NOTES:
+// NOTES:
 // - All return Option<PathBuf>. Use `.unwrap()` only if you're sure.
 // - Cross-platform: works on Linux, Windows, macOS
 // - dirs is frozen. Use `directories` crate if starting new lib work.
+
+
