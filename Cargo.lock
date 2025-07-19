@@ -723,6 +723,8 @@ version = "0.1.0"
 dependencies = [
  "borsh 0.10.4",
  "borsh-derive 0.10.4",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -919,6 +921,10 @@ version = "0.1.0"
 [[package]]
 name = "code_tesing_playground"
 version = "0.1.0"
+dependencies = [
+ "solana-client",
+ "solana-sdk",
+]
 
 [[package]]
 name = "collections_vector_hashmap"
@@ -1258,6 +1264,13 @@ dependencies = [
  "block-buffer 0.10.4",
  "crypto-common",
  "subtle",
+]
+
+[[package]]
+name = "dirs"
+version = "0.1.0"
+dependencies = [
+ "dirs 6.0.0",
 ]
 
 [[package]]
@@ -4763,7 +4776,7 @@ dependencies = [
  "anyhow",
  "bincode 2.0.1",
  "clap",
- "dirs",
+ "dirs 6.0.0",
  "solana-client",
  "solana-program",
  "solana-sdk",
